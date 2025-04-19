@@ -15,7 +15,6 @@ public class ProjectileController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log($"Collider with {collision.name}");
         // Check if the projectile collides with an enemy
         EnemyController enemy = collision.GetComponent<EnemyController>();
         if (enemy != null)

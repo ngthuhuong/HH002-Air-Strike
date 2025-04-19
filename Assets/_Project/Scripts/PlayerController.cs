@@ -1,3 +1,4 @@
+using System;
 using MoreMountains.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -29,6 +30,13 @@ public class PlayerController : MonoBehaviour
         ShootBullet();
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log($"Collider with {other.name}");
+        if (other.CompareTag("Enemy"))
+            MMEventManager.TriggerEvent(new EventPlayerDie());
+    }
+    
     #endregion
 
     #region Methods
