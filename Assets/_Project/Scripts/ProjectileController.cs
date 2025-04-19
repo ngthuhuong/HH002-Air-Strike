@@ -37,7 +37,10 @@ public class ProjectileController : MonoBehaviour
     {
         // Check if the projectile is outside the screen
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
-        if (viewportPosition.y > 1 || viewportPosition.x < 0 || viewportPosition.x > 1 || viewportPosition.y < 0)
+        if (viewportPosition.y > ConstValue.ViewportMaxY || 
+            viewportPosition.x < ConstValue.ViewportMinX || 
+            viewportPosition.x > ConstValue.ViewportMaxX || 
+            viewportPosition.y < ConstValue.ViewportMinY)
         {
             Destroy(gameObject); // Destroy the projectile
         }

@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("Stats")]
     public float speed = 5f; // Speed of the player movement
     public float timeInterval = 0.5f; // Time interval between shots
+    [SerializeField] private float stoppingDistance = 0.1f;
 
     [Header("Shooting")]
     public GameObject projectilePrefab; // Prefab for the bullet
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
-            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            if (Vector3.Distance(transform.position, targetPosition) < stoppingDistance)
             {
                 isMoving = false;
             }

@@ -4,6 +4,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
+    private const float SpawnMinX = -3.5f; // Minimum X position for spawning
+    private const float SpawnMaxX = 2.87f; // Maximum X position for spawning
+    private const float SpawnFixedY = 9f; // Fixed Y position for spawning
     public GameObject enemyPrefab; // Prefab for the enemy
     public float spawnInterval = 2f; // Time interval between spawns
 
@@ -32,10 +35,9 @@ public class EnemySpawner : MonoBehaviour
     {
         if (enemyPrefab != null)
         {
-            // Generate a random X position within the range [-4, 2.87]
-            float randomX = Random.Range(-3.5f, 2.87f);
-            float fixedY = 9f; // Y position is always 9
-            Vector3 spawnPosition = new Vector3(randomX, fixedY, 0f);
+            float randomX = Random.Range(SpawnMinX, SpawnMaxX);
+            float fixedY = SpawnFixedY;
+            Vector2 spawnPosition = new Vector2(randomX, fixedY);
 
             // Instantiate the enemy at the calculated position
             Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
