@@ -30,6 +30,19 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         }
     }
 
+    [Header("Leveling")] 
+    [SerializeField] private int currentLevelId;
+    public int CurrentLevelId
+    {
+        get => currentLevelId;
+        set
+        {
+            currentLevelId = value;
+            MMEventManager.TriggerEvent(new EDataChanged());    
+        }
+    }
+    
+    
     #region MonoBehaviour
 
     private void OnEnable()
