@@ -1,3 +1,4 @@
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
@@ -20,6 +21,7 @@ public class ProjectileController : MonoBehaviour
         if (enemy != null)
         {
             Destroy(enemy.gameObject); // Destroy the enemy
+            MMEventManager.TriggerEvent(new EEarnScore()); // Trigger the score event
             Destroy(gameObject); // Destroy the projectile
         }
     }

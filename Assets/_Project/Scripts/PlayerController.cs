@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log($"Collider with {other.name}");
         if (other.CompareTag("Enemy"))
-            MMEventManager.TriggerEvent(new EventPlayerDie());
+            MMEventManager.TriggerEvent(new EGameOver());
     }
     
     #endregion

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ public class GUIGameOver : GUIBase
 {
     [Header("Buttons")]
     [SerializeField] private Button restartButton;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI highScoreText;
 
     #region MonoBehaviour
 
@@ -30,6 +33,8 @@ public class GUIGameOver : GUIBase
     public override void Show()
     {
         base.Show();
+        scoreText.text = $"Your Score: {DataManager.Instance.CurrentScore}";
+        highScoreText.text = $"High Score: {DataManager.Instance.HighScore}";
         Time.timeScale = 0;
     }
 
