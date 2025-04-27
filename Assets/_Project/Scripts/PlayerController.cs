@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("Stats")]
     public float speed = 5f; // Speed of the player movement
-    public float timeInterval = 0.5f; // Time interval between shots
+    public float timeInterval = 0.05f; // Time interval between shots
     [SerializeField] private float stoppingDistance = 0.1f;
 
     [Header("Shooting")]
@@ -37,7 +37,23 @@ public class PlayerController : MonoBehaviour
     
     #endregion
 
-    #region Methods
+    #region Editor Methods
+
+    [ContextMenu("Reset Values")]
+    private void ResetValues()
+    {
+        speed = 5f;
+        timeInterval = 0.1f;
+        stoppingDistance = 0.1f;
+        isMoving = false;
+        currentTimer = 0f;
+        targetPosition = Vector3.zero;
+
+        Debug.Log("Player values have been reset.");
+    }
+
+    #endregion
+    #region Private Methods
 
     private void HandleMovement()
     {

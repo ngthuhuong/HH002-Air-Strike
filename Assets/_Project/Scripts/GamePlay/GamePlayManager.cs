@@ -21,6 +21,8 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         set => enemySpawner = value;
     }
 
+    public Transform centerPoint;
+
     [Header("Level Details")]
     [SerializeField] private List<LevelData> allLevels;
 
@@ -109,8 +111,9 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         foreach (var spawnData in levelData.enemySpawns)
         {
             yield return new WaitForSeconds(spawnData.spawnTime);
-            Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity);
-            
+            EnemyController enemy = Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity).GetComponent<EnemyController>();
+            enemy.centerPoint = centerPoint;
+
             //OnEnemySpawned(); // Increment enemy count
         }
     }

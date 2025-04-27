@@ -1,25 +1,29 @@
 using System;
+using System.Collections;
 using MoreMountains.Tools;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
     [Header("Components")] 
-    [SerializeField] private AttackController attackController;
-    [SerializeField] private HealthController healthController;
     [SerializeField] private MoveController moveController;
-    
-    
+
+    [Header("Movement Settings")]
+    public Transform centerPoint; // Center point for circular movement
+    [SerializeField] private float radius = 2f; // Radius of the circular movement
+    [SerializeField] private float rotationSpeed = 2f; // Speed of rotation
+    [SerializeField] private float movementDuration = 5f; // Duration of the movement
+
+    private bool isMoving = false;
+
     #region MonoBehaviour
 
     private void Start()
     {
-        
-    }
-
-    void Update()
-    {
-        CheckIfOutsideScreen();
+        if (moveController != null)
+        {
+            StartCoroutine(MoveAroundCenter());
+        }
     }
 
     private void OnDestroy()
@@ -27,41 +31,35 @@ public class EnemyController : MonoBehaviour
         MMEventManager.TriggerEvent(new EEnemyDie());
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag(TagConst.Player))
-        {
-            HealthController player = other.GetComponent<HealthController>();
-            if (player != null)
-            {
-                Debug.Log($"Player takes damage: {attackController.AttackDamage}");
-                player.TakeDamage(attackController.AttackDamage);
-                Destroy(gameObject); // Destroy the enemy
-            }
-        }
-    }
-
     #endregion
 
     #region Private Methods
 
-    private void CheckIfOutsideScreen()
+    private IEnumerator MoveAroundCenter()
     {
-        // Check if the projectile is outside the screen
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
-        if (viewportPosition.y < ConstValue.ViewportMinY)
+        isMoving = true;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < movementDuration)
         {
-            Destroy(gameObject); // Destroy the projectile
+            elapsedTime += Time.deltaTime;
+
+            // Calculate the angle and direction for circular movement
+            float angle = elapsedTime * rotationSpeed;
+            Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+            Vector2 targetPosition = (Vector2)centerPoint.position + offset;
+
+            // Set the direction in MoveController
+            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+            moveController.SetDirection(direction);
+
+            yield return null;
         }
+
+        // Stop movement after the duration
+        moveController.SetDirection(Vector2.zero);
+        isMoving = false;
     }
 
-    #endregion
-    
-    #region
-
-    public void Die()
-    {
-        Destroy(gameObject);
-    }
     #endregion
 }

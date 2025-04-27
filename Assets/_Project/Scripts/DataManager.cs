@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEngine;
 
-public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>
+
+public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>
 {
     [SerializeField] private int highScore;
     
@@ -49,12 +50,14 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     {
         this.MMEventStartListening<EEarnScore>();
         this.MMEventStartListening<EGameOver>();
+        this.MMEventStartListening<EEnemyDie>();
     }
 
     private void OnDisable()
     {
         this.MMEventStopListening<EEarnScore>();
         this.MMEventStopListening<EGameOver>();
+        this.MMEventStopListening<EEnemyDie>();
     }
 
     #endregion
@@ -80,4 +83,10 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     }
 
     #endregion
+
+    public void OnMMEvent(EEnemyDie eventType)
+    {
+        CurrentScore += 1;
+        
+    }
 }
