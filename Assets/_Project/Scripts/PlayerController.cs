@@ -1,5 +1,6 @@
 using System;
 using MoreMountains.Tools;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -71,7 +72,12 @@ public class PlayerController : MonoBehaviour
             // Check if the timer has reached zero
             if (currentTimer <= 0f)
             {
+                float diagonalAngle = 45f;
+                Quaternion rotation = Quaternion.Euler(0, 0, diagonalAngle);
+                Vector2 rotation2 = new Vector2(1f, 1f);
+                
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+                projectile.GetComponent<ProjectileController>().direction = rotation2;
 
                 // Set the projectile's parent to the ProjectileContainer
                 if (projectileContainer != null)

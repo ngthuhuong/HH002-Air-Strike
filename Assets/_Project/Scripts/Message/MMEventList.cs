@@ -12,6 +12,14 @@ public struct EEarnScore
 }
 
 /// <summary>
+/// When an enemy die
+/// </summary>
+public struct EEnemyDie
+{
+    
+}
+
+/// <summary>
 /// When data changed
 /// </summary>
 public struct EDataChanged

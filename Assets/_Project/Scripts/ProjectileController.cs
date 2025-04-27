@@ -5,6 +5,7 @@ public class ProjectileController : MonoBehaviour
 {
     [Header("Stats")]
     public float speed = 5f; // Speed of the projectile
+    public Vector2 direction = Vector2.up; // Direction of the projectile
 
     #region MonoBehaviour
 
@@ -20,7 +21,8 @@ public class ProjectileController : MonoBehaviour
         EnemyController enemy = collision.GetComponent<EnemyController>();
         if (enemy != null)
         {
-            Destroy(enemy.gameObject); // Destroy the enemy
+            enemy.Die();
+            
             MMEventManager.TriggerEvent(new EEarnScore()); // Trigger the score event
             Destroy(gameObject); // Destroy the projectile
         }
@@ -31,7 +33,8 @@ public class ProjectileController : MonoBehaviour
     private void MoveProjectile()
     {
         // Move the projectile upward
-        transform.position += speed * Time.deltaTime * Vector3.up;
+        //transform.Translate(speed * Time.deltaTime * direction);
+        transform.Translate(speed * Time.deltaTime * Vector2.up);
     }
 
     private void CheckIfOutsideScreen()

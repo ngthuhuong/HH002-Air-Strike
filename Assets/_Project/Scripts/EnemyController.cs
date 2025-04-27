@@ -1,3 +1,5 @@
+using System;
+using MoreMountains.Tools;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
@@ -15,6 +17,11 @@ public class EnemyController : MonoBehaviour
         CheckIfOutsideScreen();
     }
 
+    private void OnDestroy()
+    {
+        MMEventManager.TriggerEvent(new EEnemyDie());
+    }
+
     #endregion
 
     #region Private Methods
@@ -29,5 +36,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    #endregion
+    
+    #region
+
+    public void Die()
+    {
+        Destroy(gameObject);
+    }
     #endregion
 }
