@@ -6,6 +6,9 @@ using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Components")]
+    [SerializeField] private AttackController attackController;
+    
     [Header("Stats")]
     public float speed = 5f; // Speed of the player movement
     public float timeInterval = 0.5f; // Time interval between shots
@@ -31,12 +34,6 @@ public class PlayerController : MonoBehaviour
         ShootBullet();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log($"Collider with {other.name}");
-        if (other.CompareTag("Enemy"))
-            MMEventManager.TriggerEvent(new EGameOver());
-    }
     
     #endregion
 
@@ -77,7 +74,9 @@ public class PlayerController : MonoBehaviour
                 Vector2 rotation2 = new Vector2(1f, 1f);
                 
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-                projectile.GetComponent<ProjectileController>().direction = rotation2;
+                projectile.GetComponent<ProjectileController>().attackController.AttackDamage = attackController.AttackDamage; 
+                
+                //projectile.GetComponent<ProjectileController>().direction = rotation2;
 
                 // Set the projectile's parent to the ProjectileContainer
                 if (projectileContainer != null)

@@ -4,22 +4,41 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Stats")]
-    public float speed = 3f; // Speed of the enemy movement
-
+    [Header("Components")] 
+    [SerializeField] private AttackController attackController;
+    [SerializeField] private HealthController healthController;
+    [SerializeField] private MoveController moveController;
+    
+    
     #region MonoBehaviour
+
+    private void Start()
+    {
+        
+    }
 
     void Update()
     {
-        // Move the enemy downward
-        transform.position += speed * Time.deltaTime * Vector3.down;
-        
         CheckIfOutsideScreen();
     }
 
     private void OnDestroy()
     {
         MMEventManager.TriggerEvent(new EEnemyDie());
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(TagConst.Player))
+        {
+            HealthController player = other.GetComponent<HealthController>();
+            if (player != null)
+            {
+                Debug.Log($"Player takes damage: {attackController.AttackDamage}");
+                player.TakeDamage(attackController.AttackDamage);
+                Destroy(gameObject); // Destroy the enemy
+            }
+        }
     }
 
     #endregion

@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 239972212928830253}
   - component: {fileID: 8754641995476821486}
   - component: {fileID: 7403905370122880692}
+  - component: {fileID: 7690274692807675970}
+  - component: {fileID: 8523193813822224487}
+  - component: {fileID: 7914277683677225016}
   m_Layer: 0
   m_Name: Tri_01
   m_TagString: Enemy
@@ -99,7 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a07879c7b8d5d64f8cf2a29085c7ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
+  attackController: {fileID: 8523193813822224487}
+  healthController: {fileID: 7690274692807675970}
+  moveController: {fileID: 7914277683677225016}
 --- !u!60 &8754641995476821486
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -175,3 +180,47 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &7690274692807675970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801211920005270966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f2f1f79c4a674342af0db1ed059e974, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  currentHealth: 0
+--- !u!114 &8523193813822224487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801211920005270966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f7215b361cd60f41b00f7eaf2849a2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDamage: 2
+  attackCooldown: 1
+--- !u!114 &7914277683677225016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801211920005270966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab00bd790db1e94fb3dae1f597f990b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  direction: {x: 0, y: -1}
+  targetTranform: {fileID: 0}
+  moveTowardsTarget: 0

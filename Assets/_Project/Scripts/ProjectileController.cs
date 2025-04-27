@@ -3,6 +3,10 @@ using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
+    [Header("Components")] 
+    public AttackController attackController;
+    
+    
     [Header("Stats")]
     public float speed = 5f; // Speed of the projectile
     public Vector2 direction = Vector2.up; // Direction of the projectile
@@ -15,17 +19,19 @@ public class ProjectileController : MonoBehaviour
         CheckIfOutsideScreen();
     }
     
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the projectile collides with an enemy
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null)
+        if (other.CompareTag(TagConst.Enemy))
         {
-            enemy.Die();
-            
-            MMEventManager.TriggerEvent(new EEarnScore()); // Trigger the score event
-            Destroy(gameObject); // Destroy the projectile
+            HealthController enemy = other.GetComponent<HealthController>();
+            if (enemy != null)
+            {
+                Debug.Log($"Enemy takes damage: {attackController.AttackDamage}");
+                enemy.TakeDamage(attackController.AttackDamage);
+                Destroy(gameObject); // Destroy the projectile
+            }
         }
+        
     }
 
     #endregion
