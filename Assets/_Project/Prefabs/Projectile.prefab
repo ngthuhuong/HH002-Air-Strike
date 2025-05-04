@@ -138,7 +138,6 @@ MonoBehaviour:
   attackController: {fileID: 5450556374266849322}
   moveController: {fileID: 5656640624207662977}
   targetTag: Enemy
-  speed: 5
 --- !u!114 &5450556374266849322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
+  targetTag: Enemy
   attackCooldown: 1
 --- !u!114 &5656640624207662977
 MonoBehaviour:

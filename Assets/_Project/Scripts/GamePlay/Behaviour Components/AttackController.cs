@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 public class AttackController : MonoBehaviour
 {
     [Header("Attack Stats")]
-    [SerializeField] private int attackDamage = 10; // Damage dealt per attack
+    [SerializeField] private int attackDamage = 10; 
+    public string targetTag = TagConst.Player; // Tag of the target to attack
     public int AttackDamage
     {
         get => attackDamage;
@@ -20,6 +22,18 @@ public class AttackController : MonoBehaviour
         if (currentCooldown > 0)
         {
             currentCooldown -= Time.deltaTime;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag(targetTag))
+        {
+            HealthController targetHealth = other.GetComponent<HealthController>();
+            if (targetHealth != null)
+            {
+                targetHealth.TakeDamage(attackDamage);
+            }
         }
     }
 

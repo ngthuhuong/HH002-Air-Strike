@@ -4,8 +4,8 @@ using UnityEngine;
 public class SeekingController : MonoBehaviour
 {
     [Header("Seeking Settings")]
-    [SerializeField] private float speed = 3f;
-    [SerializeField] private float seekingDuration = 1.5f; 
+    [SerializeField] private float speed = 1.5f;
+    [SerializeField] private float seekingDuration = 15f; 
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset = Vector3.zero;
 
@@ -49,6 +49,7 @@ public class SeekingController : MonoBehaviour
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
+        
     }
 
     #endregion

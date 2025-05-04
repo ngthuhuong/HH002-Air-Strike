@@ -31,6 +31,14 @@ public class EnemyController : MonoBehaviour
         MMEventManager.TriggerEvent(new EEnemyDie());
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(TagConst.Player))
+        {
+            Destroy(gameObject);
+        }
+    }
+
     #endregion
 
     #region Private Methods
