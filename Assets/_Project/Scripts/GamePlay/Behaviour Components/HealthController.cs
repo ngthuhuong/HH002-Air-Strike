@@ -4,11 +4,14 @@ using UnityEngine.Events;
 public class HealthController : MonoBehaviour
 {
     [Header("Stats")]
-    [SerializeField] private int maxHealth = 100; // Maximum health
-    [SerializeField] private int currentHealth; // Current health
+    [SerializeField] private float maxHealth = 100; // Maximum health
+    [SerializeField] private float currentHealth; 
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
     public bool IsDead => currentHealth <= 0;
     
     [SerializeField] private UnityEvent onDead;
+    [SerializeField] private UnityEvent onTakeDamage;
+    
 
     #region MonoBehaviour
 
@@ -26,6 +29,7 @@ public class HealthController : MonoBehaviour
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // health bar 
+        onTakeDamage?.Invoke();
 
         if (currentHealth <= 0)
         {

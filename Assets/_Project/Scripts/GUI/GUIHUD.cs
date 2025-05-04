@@ -9,6 +9,7 @@ public class GUIHUD : GUIBase, MMEventListener<EDataChanged>
 {
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI hpText;
 
     #region MonoBehaviour
 
@@ -30,6 +31,7 @@ public class GUIHUD : GUIBase, MMEventListener<EDataChanged>
     private void UpdateUI()
     {
         scoreText.text = DataManager.Instance.CurrentScore.ToString();
+        hpText.text = $"HP: {GamePlayManager.Instance.Player.CurrentHealth.ToString()}";
     }
 
     #endregion

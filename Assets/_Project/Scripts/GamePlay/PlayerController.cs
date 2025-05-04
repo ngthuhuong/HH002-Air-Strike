@@ -8,7 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private AttackController attackController;
-    [SerializeField] private HealthController healthController;
+    public HealthController healthController;
+
+    public float CurrentHealth
+    {
+        get => healthController.CurrentHealth;
+    }
     
     [Header("Stats")]
     public float speed = 5f; // Speed of the player movement
@@ -86,21 +91,16 @@ public class PlayerController : MonoBehaviour
             // Check if the timer has reached zero
             if (currentTimer <= 0f)
             {
-                float diagonalAngle = 45f;
-                Quaternion rotation = Quaternion.Euler(0, 0, diagonalAngle);
-                Vector2 rotation2 = new Vector2(1f, 1f);
-                
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-                projectile.GetComponent<ProjectileController>().attackController.AttackDamage = attackController.AttackDamage; 
-                
-                //projectile.GetComponent<ProjectileController>().direction = rotation2;
-
-                // Set the projectile's parent to the ProjectileContainer
                 if (projectileContainer != null)
-                {
                     projectile.transform.SetParent(projectileContainer);
-                }
-
+                
+                // Set attributes for the projectile
+                ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
+                
+                projectileController.attackController.AttackDamage = attackController.AttackDamage; 
+                projectileController.moveController.Direction = Vector2.up;
+                
                 currentTimer = timeInterval; // Reset the timer
             }
         }
@@ -113,6 +113,11 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerDie()
     {
         MMEventManager.TriggerEvent(new EGameOver());
+    }
+
+    public void OnPlayerTakeDamage()
+    {
+        MMEventManager.TriggerEvent(new EDataChanged());
     }
 
     #endregion

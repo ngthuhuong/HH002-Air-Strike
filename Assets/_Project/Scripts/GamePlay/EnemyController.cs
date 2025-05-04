@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     public Transform centerPoint; // Center point for circular movement
     [SerializeField] private float radius = 2f; // Radius of the circular movement
     [SerializeField] private float rotationSpeed = 2f; // Speed of rotation
-    [SerializeField] private float movementDuration = 5f; // Duration of the movement
+    [SerializeField] private float movementDuration = 999f; // Duration of the movement
 
     private bool isMoving = false;
 
@@ -51,13 +51,13 @@ public class EnemyController : MonoBehaviour
 
             // Set the direction in MoveController
             Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
-            moveController.SetDirection(direction);
+            moveController.Direction = direction;
 
             yield return null;
         }
 
         // Stop movement after the duration
-        moveController.SetDirection(Vector2.zero);
+        moveController.Direction = Vector2.zero;
         isMoving = false;
     }
 

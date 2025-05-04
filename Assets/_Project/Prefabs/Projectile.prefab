@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackController: {fileID: 5450556374266849322}
+  moveController: {fileID: 5656640624207662977}
+  targetTag: Enemy
   speed: 5
-  direction: {x: 0, y: 1}
 --- !u!114 &5450556374266849322
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ public class ShootController : MonoBehaviour
             ProjectileController projectileController = projectile.GetComponent<ProjectileController>();
             if (projectileController != null)
             {
-                projectileController.SetDirection(Vector2.down);
+                projectileController.moveController.Direction = Vector2.down;
                 projectileController.attackController.AttackDamage = projectileDamage;
             }
         }

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpawns:
   - enemyPrefab: {fileID: 1801211920005270966, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
-    spawnPosition: {x: 2, y: 3}
+    spawnPosition: {x: 2, y: 5}
     spawnTime: 0
-  - enemyPrefab: {fileID: 3977108121637917946, guid: 94d16e94e3421e94e906556ddf080c92, type: 3}
-    spawnPosition: {x: 2, y: 4}
+  - enemyPrefab: {fileID: 1801211920005270966, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
+    spawnPosition: {x: -1, y: 4}
     spawnTime: 0.5
   - enemyPrefab: {fileID: 3977108121637917946, guid: 94d16e94e3421e94e906556ddf080c92, type: 3}
-    spawnPosition: {x: 2, y: 5}
+    spawnPosition: {x: -2, y: 5}
     spawnTime: 1

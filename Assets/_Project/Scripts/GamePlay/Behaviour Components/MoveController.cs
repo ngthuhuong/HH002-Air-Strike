@@ -5,8 +5,13 @@ public class MoveController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float speed = 5f; // Movement speed
-    [SerializeField] private Vector2 direction = Vector2.zero; 
-    public Vector2 Direction { get => direction; set => direction = value; }
+    [SerializeField] private Vector2 direction = Vector2.zero;
+
+    public Vector2 Direction
+    {
+        get => direction; 
+        set => direction = value.normalized;
+    }
     
     [SerializeField] private Transform targetTranform; 
     
@@ -32,11 +37,6 @@ public class MoveController : MonoBehaviour
 
     #region Public Methods
 
-    // Set the movement direction
-    public void SetDirection(Vector2 newDirection)
-    {
-        direction = newDirection.normalized;
-    }
 
     // Set the target position for movement
     public void SetTargetPosition(Transform newTargetPosition)
