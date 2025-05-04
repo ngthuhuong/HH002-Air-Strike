@@ -64,6 +64,26 @@ PrefabInstance:
       propertyPath: targetTag
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5450556374266849322, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: targetTag
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656640624207662977, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656640624207662977, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: moveBehaviour
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656640624207662977, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: movementDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5656640624207662977, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: moveTowardsTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7423963678615103398, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
       propertyPath: m_Name
       value: Projectile_01_EnemyTracking
@@ -71,29 +91,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7423963678615103398, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7369705626389070718}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
---- !u!1 &191192249224081192 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7423963678615103398, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
-  m_PrefabInstance: {fileID: 7322984899857500302}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &7369705626389070718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 191192249224081192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 240956c193e4172468243cb6cd10b944, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  seekingDuration: 1.2
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}

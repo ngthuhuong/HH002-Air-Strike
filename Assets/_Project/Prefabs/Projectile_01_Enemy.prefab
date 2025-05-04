@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: targetTag
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5450556374266849322, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: targetTag
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7423963678615103398, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
       propertyPath: m_Name
       value: Projectile_01_Enemy

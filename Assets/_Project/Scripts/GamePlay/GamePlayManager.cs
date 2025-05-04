@@ -114,7 +114,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         {
             yield return new WaitForSeconds(spawnData.spawnTime);
             EnemyController enemy = Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity).GetComponent<EnemyController>();
-            enemy.centerPoint = centerPoint;
+            // enemy.centerPoint = centerPoint;
 
             //OnEnemySpawned(); // Increment enemy count
         }
