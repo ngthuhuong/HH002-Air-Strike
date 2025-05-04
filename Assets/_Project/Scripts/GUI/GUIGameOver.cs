@@ -51,6 +51,7 @@ public class GUIGameOver : GUIBase
     private void OnClickRestart()
     {
         Hide();
+        Debug.Log($"Click restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

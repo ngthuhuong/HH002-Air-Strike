@@ -301,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28db7c853f427264ba1da60369c16527, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
   highScore: 0
   currentScore: 0
   currentLevelId: 0
@@ -563,6 +564,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18eec5e8ea9fdd14887e9cb1cf6306bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
   guiGameOver: {fileID: 681111378}
   guiHUD: {fileID: 1627360539}
 --- !u!1 &357274024
@@ -1314,6 +1316,7 @@ GameObject:
   - component: {fileID: 893011589}
   - component: {fileID: 893011591}
   - component: {fileID: 893011592}
+  - component: {fileID: 893011593}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1402,8 +1405,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackController: {fileID: 893011591}
+  healthController: {fileID: 893011592}
   speed: 5
-  timeInterval: 0.5
+  timeInterval: 0.2
   stoppingDistance: 0.1
   projectilePrefab: {fileID: 7423963678615103398, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
   projectileSpawnPoint: {fileID: 511762162}
@@ -1461,7 +1465,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893011586}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f7215b361cd60f41b00f7eaf2849a2c, type: 3}
   m_Name: 
@@ -1482,6 +1486,48 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
+  onDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 893011589}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnPlayerDie
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!50 &893011593
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893011586}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1105657511
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,8 +1952,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4363d06ac452b8d4eb73ca3c7ec82b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 0
   player: {fileID: 893011589}
   enemySpawner: {fileID: 1154643952}
+  enemyProjectileContainer: {fileID: 1390792297}
   centerPoint: {fileID: 847562541}
   allLevels:
   - {fileID: 11400000, guid: 2db1ef054efb9da4e90e0334b4b0be1f, type: 2}

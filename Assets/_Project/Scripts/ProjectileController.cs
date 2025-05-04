@@ -5,6 +5,7 @@ public class ProjectileController : MonoBehaviour
 {
     [Header("Components")] 
     public AttackController attackController;
+    public string targetTag = TagConst.Enemy;
     
     
     [Header("Stats")]
@@ -21,13 +22,14 @@ public class ProjectileController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag(TagConst.Enemy))
+        if (other.CompareTag(targetTag))
         {
-            HealthController enemy = other.GetComponent<HealthController>();
-            if (enemy != null)
+            Debug.Log($"{targetTag}, {other.gameObject.tag}");
+            HealthController targetHealth = other.GetComponent<HealthController>();
+            if (targetHealth != null)
             {
-                Debug.Log($"Enemy takes damage: {attackController.AttackDamage}");
-                enemy.TakeDamage(attackController.AttackDamage);
+                Debug.Log($"Target takes damage: {attackController.AttackDamage}");
+                targetHealth.TakeDamage(attackController.AttackDamage);
                 Destroy(gameObject); // Destroy the projectile
             }
         }
@@ -40,7 +42,7 @@ public class ProjectileController : MonoBehaviour
     {
         // Move the projectile upward
         //transform.Translate(speed * Time.deltaTime * direction);
-        transform.Translate(speed * Time.deltaTime * Vector2.up);
+        transform.Translate(speed * Time.deltaTime * direction);
     }
 
     private void CheckIfOutsideScreen()
@@ -56,5 +58,13 @@ public class ProjectileController : MonoBehaviour
         }
     }
 
+    #region Public Methods
+
+    public void SetDirection(Vector2 _direction)
+    {
+        direction = _direction;
+    }
+
+    #endregion
     
 }

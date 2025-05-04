@@ -20,6 +20,8 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         get => enemySpawner;
         set => enemySpawner = value;
     }
+    
+    public GameObject enemyProjectileContainer;
 
     public Transform centerPoint;
 

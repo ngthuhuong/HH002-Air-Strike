@@ -4,6 +4,8 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
 
+    [SerializeField] private bool dontDestroyOnLoad = true; // Flag to control DontDestroyOnLoad
+
     public static T Instance
     {
         get
@@ -32,7 +34,12 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         else
         {
             _instance = this as T;
-            DontDestroyOnLoad(gameObject); // Optional: Keep the instance across scenes
+
+            // Apply DontDestroyOnLoad only if the flag is true
+            if (dontDestroyOnLoad)
+            {
+                DontDestroyOnLoad(gameObject);
+            }
         }
     }
 }

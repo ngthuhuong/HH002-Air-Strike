@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Components")]
     [SerializeField] private AttackController attackController;
+    [SerializeField] private HealthController healthController;
     
     [Header("Stats")]
     public float speed = 5f; // Speed of the player movement
@@ -103,6 +104,15 @@ public class PlayerController : MonoBehaviour
                 currentTimer = timeInterval; // Reset the timer
             }
         }
+    }
+
+    #endregion
+
+    #region Public Methods
+
+    public void OnPlayerDie()
+    {
+        MMEventManager.TriggerEvent(new EGameOver());
     }
 
     #endregion
