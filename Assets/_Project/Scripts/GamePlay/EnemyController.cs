@@ -9,6 +9,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private MoveController moveController;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Collider2D collider2D;
+    [SerializeField] private CoinController coinController;
 
     [Header("VFX")] 
     [SerializeField] private GameObject dieVFX;
@@ -50,9 +51,12 @@ public class EnemyController : MonoBehaviour
         // bật hiệu ứng chết
         
         dieVFX.SetActive(true);
+        Instantiate(coinController, transform.position, Quaternion.identity);
+
         yield return new WaitForSeconds(1f);
-        
+
         Destroy(gameObject);
+        //spawn coin
     }
     
     #endregion

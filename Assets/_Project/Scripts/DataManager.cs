@@ -5,7 +5,7 @@ using MoreMountains.Tools;
 using UnityEngine;
 
 
-public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>
+public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>, MMEventListener<EEarnResource>
 {
     [SerializeField] private int highScore;
     
@@ -42,7 +42,17 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
             MMEventManager.TriggerEvent(new EDataChanged());    
         }
     }
-    
+
+    [SerializeField] private int currentCoin;
+    public int CurrentCoin 
+    {
+        get => currentCoin;
+        set
+        {
+            currentCoin = value;
+            MMEventManager.TriggerEvent(new EDataChanged());    
+        }
+    }
     
     #region MonoBehaviour
 
@@ -51,6 +61,7 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         this.MMEventStartListening<EEarnScore>();
         this.MMEventStartListening<EGameOver>();
         this.MMEventStartListening<EEnemyDie>();
+        this.MMEventStartListening<EEarnResource>();
     }
 
     private void OnDisable()
@@ -58,6 +69,7 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         this.MMEventStopListening<EEarnScore>();
         this.MMEventStopListening<EGameOver>();
         this.MMEventStopListening<EEnemyDie>();
+        this.MMEventStopListening<EEarnResource>();
     }
 
     #endregion
@@ -88,5 +100,10 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     {
         CurrentScore += 1;
         
+    }
+
+    public void OnMMEvent(EEarnResource eventType)
+    {
+        CurrentCoin += eventType.amount;
     }
 }

@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -952706307
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: -6502978241095339076, guid: 679df4a745e1ef744891fee71d6bde3f, type: 3}
   m_Color: {r: 0.98395735, g: 1, b: 0.5587002, a: 1}
@@ -128,6 +128,7 @@ MonoBehaviour:
   moveController: {fileID: 7914277683677225016}
   spriteRenderer: {fileID: 7219954958926065477}
   collider2D: {fileID: 3790828139708241795}
+  coinController: {fileID: 8765448071220000114, guid: 0d4a3b5fe9d256c44a1a259928a40cc0, type: 3}
   dieVFX: {fileID: 8156116429620184390}
 --- !u!50 &7403905370122880692
 Rigidbody2D:

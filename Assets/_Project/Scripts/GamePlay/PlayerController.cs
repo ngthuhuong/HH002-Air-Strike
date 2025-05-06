@@ -60,7 +60,15 @@ public class PlayerController : MonoBehaviour
         ShootBullet();
     }
 
-    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag(TagConst.Coin))
+        {
+            Debug.Log(other.name);
+            MMEventManager.TriggerEvent(new EEarnResource(ResourceType.Coin, 1));
+        }
+    }
+
     #endregion
 
     #region Editor Methods

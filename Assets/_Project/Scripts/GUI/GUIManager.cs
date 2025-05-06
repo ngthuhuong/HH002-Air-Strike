@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEngine;
 
-public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>
+public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MMEventListener<EDataChanged>
 {
     [Header("GUIs")] 
     [SerializeField] private GUIGameOver guiGameOver;
@@ -15,11 +15,15 @@ public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>
     private void OnEnable()
     {
         this.MMEventStartListening<EGameOver>();
+        this.MMEventStartListening<EDataChanged>();
+
     }
 
     private void OnDisable()
     {
         this.MMEventStopListening<EGameOver>();
+        this.MMEventStopListening<EDataChanged>();
+
     }
 
     #endregion
@@ -28,5 +32,10 @@ public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>
     {
         //Hiện GUIGameOver
         guiGameOver.Show();
+    }
+
+    public void OnMMEvent(EDataChanged eventType)
+    {
+        guiHUD.UpdateUI();
     }
 }

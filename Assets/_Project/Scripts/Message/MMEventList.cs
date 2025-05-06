@@ -26,3 +26,22 @@ public struct EDataChanged
 {
     
 }
+
+public struct EEarnResource
+{
+    public ResourceType resourceType;
+    public int amount;
+    
+    public EEarnResource(ResourceType resourceType, int amount)
+    {
+        this.resourceType = resourceType;
+        this.amount = amount;
+    }
+}
+
+public enum ResourceType
+{
+    Coin,
+    Gem,
+    Star
+}

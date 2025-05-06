@@ -5,42 +5,34 @@ using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 
-public class GUIHUD : GUIBase, MMEventListener<EDataChanged>
+public class GUIHUD : GUIBase
 {
     [Header("Components")]
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI hpText;
+    [SerializeField] private TextMeshProUGUI coinText;
+    
 
     #region MonoBehaviour
 
     private void OnEnable()
     {
-        this.MMEventStartListening<EDataChanged>();
     }
 
     private void OnDisable()
     {
-        this.MMEventStopListening<EDataChanged>();
     }
 
     #endregion
     
 
-    #region Private Methods
+    #region Public Methods
 
-    private void UpdateUI()
+    public void UpdateUI()
     {
         scoreText.text = DataManager.Instance.CurrentScore.ToString();
         hpText.text = $"HP: {GamePlayManager.Instance.Player.CurrentHealth.ToString()}";
-    }
-
-    #endregion
-
-    #region Events Listen
-
-    public void OnMMEvent(EDataChanged eventType)
-    {
-        UpdateUI();
+        coinText.text = DataManager.Instance.CurrentCoin.ToString();
     }
 
     #endregion
