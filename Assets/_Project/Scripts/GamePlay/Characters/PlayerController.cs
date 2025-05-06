@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private Collider2D collider2D;
 
+    [Header("Colors")]
+    [SerializeField] private Color hurtColor;
+    [SerializeField] private Color normalColor;
+    
     public float CurrentHealth
     {
         get => healthController.CurrentHealth;
@@ -121,6 +125,8 @@ public class PlayerController : MonoBehaviour
             // Check if the timer has reached zero
             if (currentTimer <= 0f)
             {
+                // GameObject projectile = PoolingManager.Instance.GetObject(PoolingManager.PoolTag.PlayerProjectile, projectileSpawnPoint.position, Quaternion.identity);
+                
                 GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
                 if (projectileContainer != null)
                     projectile.transform.SetParent(projectileContainer);
@@ -152,6 +158,12 @@ public class PlayerController : MonoBehaviour
         MMEventManager.TriggerEvent(new EGameOver());
     }
 
+    private IEnumerator IHurtEffect()
+    {
+        spriteRenderer.color = hurtColor;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = normalColor;
+    }
     #endregion
 
     #region Public Methods
@@ -164,6 +176,7 @@ public class PlayerController : MonoBehaviour
     public void OnPlayerTakeDamage()
     {
         MMEventManager.TriggerEvent(new EDataChanged());
+        StartCoroutine(IHurtEffect());
     }
 
     #endregion

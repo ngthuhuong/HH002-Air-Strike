@@ -42,8 +42,9 @@ public class ShootController : MonoBehaviour
     {
         if (projectilePrefab != null && projectileSpawnPoint != null)
         {
+            //GameObject projectile = PoolingManager.Instance.GetObject(PoolingManager.PoolTag.EnemyProjectile, projectileSpawnPoint.position, Quaternion.identity);
+            
             GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-
             // Set the projectile's parent to the container (if provided)
             if (projectileContainer != null)
             {

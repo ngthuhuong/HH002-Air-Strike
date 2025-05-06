@@ -7,7 +7,8 @@ public class ProjectileController : MonoBehaviour
     public AttackController attackController;
     public MoveController moveController;
 
-    public string targetTag = TagConst.Enemy; 
+    public string targetTag = TagConst.Enemy;
+    [SerializeField] private PoolingManager.PoolTag poolTag;
     
     #region MonoBehaviour
 
@@ -21,6 +22,8 @@ public class ProjectileController : MonoBehaviour
         if (other.CompareTag(targetTag))
         {
             Destroy(gameObject);
+            // ProjectilePoolObject.Instance.ReturnObject(gameObject);
+            // PoolingManager.Instance.ReturnObject(poolTag, gameObject);
         }
     }
 
@@ -35,7 +38,9 @@ public class ProjectileController : MonoBehaviour
             viewportPosition.x > ConstValue.ViewportMaxX || 
             viewportPosition.y < ConstValue.ViewportMinY)
         {
-            Destroy(gameObject); // Destroy the projectile
+            // ProjectilePoolObject.Instance.ReturnObject(gameObject);
+            // PoolingManager.Instance.ReturnObject(poolTag, gameObject);
+            Destroy(gameObject);
         }
     }
 

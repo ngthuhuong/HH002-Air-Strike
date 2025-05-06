@@ -61,6 +61,10 @@ PrefabInstance:
       value: 0.281118
       objectReference: {fileID: 0}
     - target: {fileID: 4865342530774111742, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
+      propertyPath: poolTag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4865342530774111742, guid: 73f92c39bbc1ff141b66c1f13cc3b942, type: 3}
       propertyPath: targetTag
       value: Player
       objectReference: {fileID: 0}

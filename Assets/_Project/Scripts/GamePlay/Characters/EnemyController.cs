@@ -51,12 +51,13 @@ public class EnemyController : MonoBehaviour
         // bật hiệu ứng chết
         
         dieVFX.SetActive(true);
-        Instantiate(coinController, transform.position, Quaternion.identity);
-
+        //Instantiate(coinController, transform.position, Quaternion.identity);
+        CoinPoolObject.Instance.GetObject(transform.position, Quaternion.identity);
+        // PoolingManager.Instance.ReturnObject(PoolingManager.PoolTag.Coin, gameObject);
+        
         yield return new WaitForSeconds(1f);
 
         Destroy(gameObject);
-        //spawn coin
     }
     
     #endregion
