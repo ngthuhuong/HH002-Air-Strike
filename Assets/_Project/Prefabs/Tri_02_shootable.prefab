@@ -47,6 +47,10 @@ PrefabInstance:
       propertyPath: movementDuration
       value: 999
       objectReference: {fileID: 0}
+    - target: {fileID: 1539226876038757604, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 2516480686695606342, guid: 979dff075fa65524d867f1fce2e26324, type: 3}
     - target: {fileID: 1801211920005270966, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
       propertyPath: m_Name
       value: Tri_02_shootable
@@ -91,6 +95,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7219954958926065477, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1784796646637932720, guid: 979dff075fa65524d867f1fce2e26324, type: 3}
     - target: {fileID: 7914277683677225016, guid: eb38b476096287b4889ea40ba84d4f69, type: 3}
       propertyPath: moveBehaviour
       value: 2

@@ -62,7 +62,7 @@ public class HealthController : MonoBehaviour
     {
         onDead?.Invoke();
         Debug.Log($"{gameObject.name} has died.");
-        Destroy(gameObject); // Destroy the object (optional)
+        //Destroy(gameObject);
     }
 
     // Coroutine to activate invincibility

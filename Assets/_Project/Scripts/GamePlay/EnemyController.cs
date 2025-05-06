@@ -7,7 +7,11 @@ public class EnemyController : MonoBehaviour
 {
     [Header("Components")] 
     [SerializeField] private MoveController moveController;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Collider2D collider2D;
 
+    [Header("VFX")] 
+    [SerializeField] private GameObject dieVFX;
 
     #region MonoBehaviour
 
@@ -20,15 +24,36 @@ public class EnemyController : MonoBehaviour
     {
         if (other.CompareTag(TagConst.Player))
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
     #endregion
 
+    #region Public Methods
+
+    public void Die()
+    {
+        StartCoroutine(IDie());
+    }
+
+    #endregion
+    
     #region Private Methods
 
+    private IEnumerator IDie()
+    {
+        // tắt hình ảnh, collider,
+        spriteRenderer.enabled = false;
+        collider2D.enabled = false;
+        moveController.enabled = false;
+        // bật hiệu ứng chết
+        
+        dieVFX.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        
+        Destroy(gameObject);
+    }
     
-
     #endregion
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using MoreMountains.Tools;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -9,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [Header("Components")]
     [SerializeField] private AttackController attackController;
     public HealthController healthController;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Collider2D collider2D;
 
     public float CurrentHealth
     {
@@ -31,8 +35,24 @@ public class PlayerController : MonoBehaviour
 
     [Header("Flags")]
     [SerializeField, MMReadOnly] private bool isMoving = false;
+    [SerializeField] private bool isMovable = true; 
 
+    [Header("Behaviour")] 
+    [SerializeField] private ExplosionController dieVFX;
+    
     #region MonoBehaviour
+
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        collider2D = GetComponent<Collider2D>();
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+    }
 
     void Update()
     {
@@ -63,6 +83,8 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if (!isMovable) return;
+        
         if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -106,13 +128,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private IEnumerator IDie()
+    {
+        // Disable the player
+        collider2D.enabled = false;
+        spriteRenderer.enabled = false;
+        isMovable = false;
+
+        // Play the die VFX
+        dieVFX.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(dieVFX.Animator.GetCurrentAnimatorStateInfo(0).length); // Wait for 1 second
+
+        // Trigger game over event
+        MMEventManager.TriggerEvent(new EGameOver());
+    }
+
     #endregion
 
     #region Public Methods
 
     public void OnPlayerDie()
     {
-        MMEventManager.TriggerEvent(new EGameOver());
+        StartCoroutine(IDie());
     }
 
     public void OnPlayerTakeDamage()
