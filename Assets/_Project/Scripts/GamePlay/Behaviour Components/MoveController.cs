@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MoveController : MonoBehaviour
 {
@@ -8,7 +9,20 @@ public class MoveController : MonoBehaviour
     [SerializeField] private MoveBehaviour moveBehaviour = MoveBehaviour.Straight;
     
     [Header("Stats")]
-    [SerializeField] private float speed = 5f; 
+    [SerializeField] private float baseSpeed = 5f; 
+    [SerializeField] private float speedBoostDuration = 5f;
+    [SerializeField] private float speedBoostMultiplier = 2f;
+    
+    private float CurrentSpeed 
+    {
+        get
+        {
+            float res = baseSpeed;
+            if (speedBoostDuration > 0)
+                res += baseSpeed * (speedBoostMultiplier - 1);
+            return res;
+        }
+    }
 
     [Header("Straight Settings")]
     [SerializeField] private Vector2 direction = Vector2.zero;
@@ -88,6 +102,12 @@ public class MoveController : MonoBehaviour
         seekingTimer = 0f; // Reset seeking timer
     }
 
+    public void ApplySpeedBoost(float duration, float multiplier)
+    {
+        speedBoostDuration = duration;
+        speedBoostMultiplier = multiplier;
+    }
+
     #endregion
 
     #region Private Methods
@@ -97,7 +117,7 @@ public class MoveController : MonoBehaviour
     {
         if (direction != Vector2.zero)
         {
-            transform.Translate(speed * Time.deltaTime * direction);
+            transform.Translate(baseSpeed * Time.deltaTime * direction);
         }
     }
 
@@ -117,7 +137,7 @@ public class MoveController : MonoBehaviour
             }
 
             Vector3 targetPositionWithOffset = targetTransform.position + offset;
-            transform.position = Vector3.MoveTowards(transform.position, targetPositionWithOffset, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPositionWithOffset, baseSpeed * Time.deltaTime);
 
             // Optionally, rotate to face the target
             direction = (targetPositionWithOffset - transform.position).normalized;

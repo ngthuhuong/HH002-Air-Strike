@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class HealthController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class HealthController : MonoBehaviour
     [Header("Invincibility Settings")]
     private float invincibleDuration = 0.2f;
     private bool isInvincible = false; 
+    private IEnumerator invincibleCoroutine;
 
     [SerializeField] private UnityEvent onDead;
     [SerializeField] private UnityEvent onTakeDamage;
@@ -42,7 +44,7 @@ public class HealthController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(ActivateInvincibility());
+            StartCoroutine(IEActivateInvincibility(invincibleDuration));
         }
     }
 
@@ -51,6 +53,26 @@ public class HealthController : MonoBehaviour
     {
         currentHealth += amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+    }
+
+    public void ActivateInvincibility(float duration)
+    {
+        if (invincibleCoroutine != null)
+        {
+            StopCoroutine(invincibleCoroutine);
+        }
+
+        invincibleCoroutine = IEActivateInvincibility(duration);
+        StartCoroutine(invincibleCoroutine);
+    }
+
+    public void DeactivateInvincibility()
+    {
+        if (invincibleCoroutine != null)
+        {
+            StopCoroutine(invincibleCoroutine);
+            isInvincible = false;
+        }
     }
 
     #endregion
@@ -66,10 +88,10 @@ public class HealthController : MonoBehaviour
     }
 
     // Coroutine to activate invincibility
-    private System.Collections.IEnumerator ActivateInvincibility()
+    private IEnumerator IEActivateInvincibility(float duration)
     {
         isInvincible = true;
-        yield return new WaitForSeconds(invincibleDuration);
+        yield return new WaitForSeconds(duration);
         isInvincible = false;
     }
 
