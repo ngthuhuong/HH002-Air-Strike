@@ -105,6 +105,8 @@ public class HealthController : MonoBehaviour
 
     private IEnumerator IEActiveShield(float duration)
     {
+
+        MMEventManager.TriggerEvent(new EActiveBooster(BoosterType.Shield, duration));
         isInvincible = true;
         if (shieldVFX != null)
             shieldVFX.SetActive(true);

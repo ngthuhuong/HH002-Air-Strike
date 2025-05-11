@@ -93,8 +93,24 @@ public class RewardPoolCoin : Singleton<RewardPoolCoin>
             return null;
         }
 
-        // Get a random reward type
-        var randomRewardType = rewardPools.Keys.ElementAt(Random.Range(0, rewardPools.Count));
+        // Create a weighted list of reward types
+        List<RewardType> weightedRewardTypes = new List<RewardType>();
+        foreach (var rewardType in rewardPools.Keys)
+        {
+            if (rewardType == RewardType.Coin)
+            {
+                // Add the coin reward type twice to double its probability
+                weightedRewardTypes.Add(rewardType);
+                weightedRewardTypes.Add(rewardType);
+            }
+            else
+            {
+                weightedRewardTypes.Add(rewardType);
+            }
+        }
+
+        // Select a random reward type from the weighted list
+        var randomRewardType = weightedRewardTypes[Random.Range(0, weightedRewardTypes.Count)];
         return GetObject(randomRewardType, position, rotation);
     }
 

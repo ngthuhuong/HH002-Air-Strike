@@ -197,7 +197,9 @@ public class PlayerController : MonoBehaviour
 
     public void ApplySpeedBoost(float duration, float speedMultiplier)
     {
+        MMEventManager.TriggerEvent(new EActiveBooster(BoosterType.Speed, duration));
         StartCoroutine(IEApplySpeedBoost(duration, speedMultiplier));
+        
     }
 
     #endregion

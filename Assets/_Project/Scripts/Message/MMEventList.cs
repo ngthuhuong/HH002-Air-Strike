@@ -27,6 +27,18 @@ public struct EDataChanged
     
 }
 
+public struct EActiveBooster
+{
+    public BoosterType BoosterType;
+    public float Duration;
+
+    public EActiveBooster(BoosterType boosterType, float duration)
+    {
+        this.BoosterType = boosterType;
+        this.Duration = duration;
+    }
+    
+}
 public struct EEarnResource
 {
     public ResourceType resourceType;
@@ -44,4 +56,10 @@ public enum ResourceType
     Coin,
     Gem,
     Star
+}
+
+public enum BoosterType
+{
+    Speed,
+    Shield,
 }
