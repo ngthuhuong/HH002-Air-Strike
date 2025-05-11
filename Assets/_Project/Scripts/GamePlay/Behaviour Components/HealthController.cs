@@ -1,19 +1,27 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using MoreMountains.Tools;
 
 public class HealthController : MonoBehaviour
 {
     [Header("Stats")]
     [SerializeField] private float maxHealth = 100;
     [SerializeField] private float currentHealth;
-    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+    public float CurrentHealth { get => currentHealth;
+        set
+        {
+            currentHealth = value;
+            MMEventManager.TriggerEvent(new EDataChanged());
+        }
+    }
     public bool IsDead => currentHealth <= 0;
 
     [Header("Invincibility Settings")]
     private float invincibleDuration = 0.2f;
     private bool isInvincible = false; 
     private IEnumerator invincibleCoroutine;
+    [SerializeField] private GameObject shieldVFX; 
 
     [SerializeField] private UnityEvent onDead;
     [SerializeField] private UnityEvent onTakeDamage;
@@ -44,35 +52,35 @@ public class HealthController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(IEActivateInvincibility(invincibleDuration));
+            // StartCoroutine(IEActivateInvincibility(invincibleDuration));
         }
     }
 
     // Method to heal
     public void Heal(int amount)
     {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        CurrentHealth += amount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
 
-    public void ActivateInvincibility(float duration)
+    public void ActivateShield(float duration)
     {
         if (invincibleCoroutine != null)
         {
-            StopCoroutine(invincibleCoroutine);
+            DeactivateInvincibility();
         }
 
-        invincibleCoroutine = IEActivateInvincibility(duration);
+        invincibleCoroutine = IEActiveShield(duration);
         StartCoroutine(invincibleCoroutine);
     }
 
     public void DeactivateInvincibility()
     {
-        if (invincibleCoroutine != null)
-        {
-            StopCoroutine(invincibleCoroutine);
-            isInvincible = false;
-        }
+        StopCoroutine(invincibleCoroutine);
+        isInvincible = false;
+        
+        if (shieldVFX != null)
+            shieldVFX.SetActive(false);
     }
 
     #endregion
@@ -93,6 +101,17 @@ public class HealthController : MonoBehaviour
         isInvincible = true;
         yield return new WaitForSeconds(duration);
         isInvincible = false;
+    }
+
+    private IEnumerator IEActiveShield(float duration)
+    {
+        isInvincible = true;
+        if (shieldVFX != null)
+            shieldVFX.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        isInvincible = false;
+        if (shieldVFX != null)
+            shieldVFX.SetActive(false);
     }
 
     #endregion

@@ -18,14 +18,29 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color hurtColor;
     [SerializeField] private Color normalColor;
     
+    [Header("Flags")]
+    [SerializeField] private bool isSpeedBoosted = false;
+    
     public float CurrentHealth
     {
         get => healthController.CurrentHealth;
     }
     
     [Header("Stats")]
-    public float speed = 5f; // Speed of the player movement
-    public float timeInterval = 0.05f; // Time interval between shots
+    public float baseSpeed = 5f; // Speed of the player movement
+    [SerializeField] private float speedMultiplier = 1f;
+    public float SpeedMultiplier
+    {
+        get => speedMultiplier;
+        set => speedMultiplier = value;
+    }
+    public float CurrentSpeed
+    {
+        get => baseSpeed * speedMultiplier;
+    }
+    
+    
+    public float timeInterval = 0.2f; // Time interval between shots
     [SerializeField] private float stoppingDistance = 0.1f;
 
     [Header("Shooting")]
@@ -40,6 +55,7 @@ public class PlayerController : MonoBehaviour
     [Header("Flags")]
     [SerializeField, MMReadOnly] private bool isMoving = false;
     [SerializeField] private bool isMovable = true; 
+    
 
     [Header("Behaviour")] 
     [SerializeField] private ExplosionController dieVFX;
@@ -80,7 +96,7 @@ public class PlayerController : MonoBehaviour
     [ContextMenu("Reset Values")]
     private void ResetValues()
     {
-        speed = 5f;
+        baseSpeed = 5f;
         timeInterval = 0.1f;
         stoppingDistance = 0.1f;
         isMoving = false;
@@ -106,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
         if (isMoving)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, CurrentSpeed * Time.deltaTime);
 
             if (Vector3.Distance(transform.position, targetPosition) < stoppingDistance)
             {
@@ -177,6 +193,22 @@ public class PlayerController : MonoBehaviour
     {
         MMEventManager.TriggerEvent(new EDataChanged());
         StartCoroutine(IHurtEffect());
+    }
+
+    public void ApplySpeedBoost(float duration, float speedMultiplier)
+    {
+        StartCoroutine(IEApplySpeedBoost(duration, speedMultiplier));
+    }
+
+    #endregion
+
+    #region Power Ups Methods
+    
+    public IEnumerator IEApplySpeedBoost(float duration, float speedMultiplier)
+    {
+        this.speedMultiplier = speedMultiplier;
+        yield return new WaitForSeconds(duration);
+        this.speedMultiplier = 1f;
     }
 
     #endregion

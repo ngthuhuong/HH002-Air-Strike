@@ -1,9 +1,23 @@
+using System;
 using UnityEngine;
 
 public class PowerUpShield : PowerUpBase
 {
     private GameObject shieldObject;
     private HealthController healthController;
+
+    #region MonoBehaviour
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.GetComponent<HealthController>() != null)
+        {
+            ApplyPowerUp(other.gameObject);
+            gameObject.SetActive(false);
+        }
+    }
+
+    #endregion
 
     public override void ApplyPowerUp(GameObject target)
     {
@@ -12,18 +26,11 @@ public class PowerUpShield : PowerUpBase
         healthController = target.GetComponent<HealthController>();
         if (healthController != null)
         {
-            // Create shield visual effect
-            if (powerUpData.powerUpPrefab != null)
-            {
-                shieldObject = Instantiate(powerUpData.powerUpPrefab, target.transform);
-            }
-            
-            // Enable invincibility
-            healthController.ActivateInvincibility(powerUpData.duration);
+            healthController.ActivateShield(powerUpData.duration);
         }
     }
 
-    public override void RemovePowerUp(GameObject target)
+    /*public override void RemovePowerUp(GameObject target)
     {
         if (healthController != null)
         {
@@ -36,5 +43,5 @@ public class PowerUpShield : PowerUpBase
         }
         
         base.RemovePowerUp(target);
-    }
+    }*/
 } 

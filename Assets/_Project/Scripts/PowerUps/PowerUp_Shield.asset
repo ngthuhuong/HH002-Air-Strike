@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11f65c08dfefb4d44b15673c9a034c04, type: 3}
-  m_Name: PowerUp_SpeedBoost
+  m_Name: PowerUp_Shield
   m_EditorClassIdentifier: 
-  powerUpName: SpeedBoost
+  powerUpName: Shield
   icon: {fileID: 0}
   duration: 5
-  effectValue: 5
+  effectValue: 0
   activationSound: {fileID: 0}
   activationEffect: {fileID: 0}
