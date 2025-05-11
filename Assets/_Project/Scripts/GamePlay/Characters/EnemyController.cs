@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using DG.Tweening;
 using MoreMountains.Tools;
 using UnityEngine;
 
@@ -52,8 +53,9 @@ public class EnemyController : MonoBehaviour
         
         dieVFX.SetActive(true);
         //Instantiate(coinController, transform.position, Quaternion.identity);
-        CoinPoolObject.Instance.GetObject(transform.position, Quaternion.identity);
+        // CoinPoolObject.Instance.GetObject(transform.position, Quaternion.identity);
         // PoolingManager.Instance.ReturnObject(PoolingManager.PoolTag.Coin, gameObject);
+        RewardPoolCoin.Instance.GetRandomReward(transform.position, Quaternion.identity);
         
         yield return new WaitForSeconds(1f);
 

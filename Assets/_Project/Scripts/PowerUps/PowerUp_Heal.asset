@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f65c08dfefb4d44b15673c9a034c04, type: 3}
   m_Name: PowerUp_Heal
   m_EditorClassIdentifier: 
-  powerUpName: Shield
+  powerUpName: Heal
   icon: {fileID: 0}
   duration: 5
-  effectValue: 0
+  effectValue: 10
   activationSound: {fileID: 0}
   activationEffect: {fileID: 0}
