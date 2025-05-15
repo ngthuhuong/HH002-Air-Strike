@@ -27,6 +27,11 @@ public struct EDataChanged
     
 }
 
+public struct EGameStart
+{
+    
+}
+
 public struct EActiveBooster
 {
     public BoosterType BoosterType;
@@ -48,6 +53,18 @@ public struct EEarnResource
     {
         this.resourceType = resourceType;
         this.amount = amount;
+    }
+}
+
+public struct EAchievementUnlocked
+{
+    public AchievementType achievementType;
+    public string achievementName;
+    
+    public EAchievementUnlocked(AchievementType achievementType, string achievementName)
+    {
+        this.achievementType = achievementType;
+        this.achievementName = achievementName;
     }
 }
 

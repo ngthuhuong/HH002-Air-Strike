@@ -17,6 +17,11 @@ public class EnemyController : MonoBehaviour
 
     #region MonoBehaviour
 
+    private void FixedUpdate()
+    {
+        CheckIfOutsideScreen();
+    }
+
     private void OnDestroy()
     {
         MMEventManager.TriggerEvent(new EEnemyDie());
@@ -62,5 +67,16 @@ public class EnemyController : MonoBehaviour
         Destroy(gameObject);
     }
     
+    private void CheckIfOutsideScreen()
+    {
+        // Check if the projectile is outside the screen
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
+        if (viewportPosition.y < ConstValue.ViewportMinY)
+        {
+            // ProjectilePoolObject.Instance.ReturnObject(gameObject);
+            // PoolingManager.Instance.ReturnObject(poolTag, gameObject);
+            Destroy(gameObject);
+        }
+    }
     #endregion
 }

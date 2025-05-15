@@ -43,6 +43,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
     private void Start()
     {
         StartCoroutine(SpawnAllLevels());
+        MMEventManager.TriggerEvent(new EGameStart());
     }
 
     private void OnEnable()

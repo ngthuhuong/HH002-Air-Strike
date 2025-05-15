@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,7 @@ public class GUIGameOver : GUIBase
         Hide();
         Debug.Log($"Click restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // MMEventManager.TriggerEvent(new EGameStart());
     }
 
     #endregion

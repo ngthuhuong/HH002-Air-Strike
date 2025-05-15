@@ -5,7 +5,7 @@ using MoreMountains.Tools;
 using UnityEngine;
 
 
-public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>, MMEventListener<EEarnResource>
+public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>, MMEventListener<EEarnResource>, MMEventListener<EAchievementUnlocked>, MMEventListener<EGameStart>
 {
     [SerializeField] private int highScore;
     
@@ -46,10 +46,20 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     [SerializeField] private int currentCoin;
     public int CurrentCoin 
     {
-        get => currentCoin;
+        get => PlayerPrefs.GetInt(PrefString.CURRENT_COIN, 0);
         set
         {
-            currentCoin = value;
+            PlayerPrefs.SetInt(PrefString.CURRENT_COIN, value);
+            MMEventManager.TriggerEvent(new EDataChanged());    
+        }
+    }
+    
+    public int GamesPlayed
+    {
+        get => PlayerPrefs.GetInt(PrefString.GAMES_PLAYED, 0);
+        set
+        {
+            PlayerPrefs.SetInt(PrefString.GAMES_PLAYED, value);
             MMEventManager.TriggerEvent(new EDataChanged());    
         }
     }
@@ -62,6 +72,8 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         this.MMEventStartListening<EGameOver>();
         this.MMEventStartListening<EEnemyDie>();
         this.MMEventStartListening<EEarnResource>();
+        this.MMEventStartListening<EAchievementUnlocked>();
+        this.MMEventStartListening<EGameStart>();
     }
 
     private void OnDisable()
@@ -70,6 +82,8 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         this.MMEventStopListening<EGameOver>();
         this.MMEventStopListening<EEnemyDie>();
         this.MMEventStopListening<EEarnResource>();
+        this.MMEventStopListening<EAchievementUnlocked>();
+        this.MMEventStopListening<EGameStart>();
     }
 
     #endregion
@@ -93,9 +107,7 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
             HighScore = CurrentScore;
         }
     }
-
-    #endregion
-
+    
     public void OnMMEvent(EEnemyDie eventType)
     {
         CurrentScore += 1;
@@ -106,4 +118,33 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     {
         CurrentCoin += eventType.amount;
     }
+
+    public void OnMMEvent(EAchievementUnlocked eventType)
+    {
+        foreach (Achievement achievement in AchievementManager.Instance.achievements)
+        {
+            if (achievement.name == eventType.achievementName)
+            {
+                if (achievement.rewardType == RewardPoolCoin.RewardType.Coin)
+                {
+                    CurrentCoin += achievement.rewardValue;
+                }
+            }
+        }
+    }
+
+    public void OnMMEvent(EGameStart eventType)
+    {
+        GamesPlayed += 1;
+    }
+
+    #endregion
+
+    
+}
+
+public class PrefString
+{
+    public const string CURRENT_COIN = "CURRENT_COIN";
+    public const string GAMES_PLAYED = "GAMES_PLAYED";
 }

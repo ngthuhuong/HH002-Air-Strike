@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8523193813822224487}
   - component: {fileID: 7914277683677225016}
   - component: {fileID: 3790828139708241795}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tri_01_Tobey
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -171,6 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   currentHealth: 0
+  shieldVFX: {fileID: 0}
   onDead:
     m_PersistentCalls:
       m_Calls:
@@ -217,7 +218,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveBehaviour: 0
-  speed: 2
+  baseSpeed: 5
+  speedBoostDuration: 5
+  speedBoostMultiplier: 2
   direction: {x: 0, y: -1}
   seekingDuration: 15
   targetTransform: {fileID: 0}
@@ -272,6 +275,10 @@ PrefabInstance:
     - target: {fileID: 376637931522165282, guid: 68d5549769094a849bf1ab2bca00d6f7, type: 3}
       propertyPath: m_Name
       value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 376637931522165282, guid: 68d5549769094a849bf1ab2bca00d6f7, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4213013054295382191, guid: 68d5549769094a849bf1ab2bca00d6f7, type: 3}
       propertyPath: m_LocalPosition.x
