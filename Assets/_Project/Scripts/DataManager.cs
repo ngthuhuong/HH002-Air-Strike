@@ -147,4 +147,5 @@ public class PrefString
 {
     public const string CURRENT_COIN = "CURRENT_COIN";
     public const string GAMES_PLAYED = "GAMES_PLAYED";
+    public const string LAST_CLAIM_DATE = "LAST_CLAIM_DATE";
 }
