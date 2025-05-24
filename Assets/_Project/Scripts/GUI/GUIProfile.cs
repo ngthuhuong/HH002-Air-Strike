@@ -1,26 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class GUIProfile : MonoBehaviour
+public class GUIProfile : GUIBase
 {
-    #region MonoBehaviour
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private TextMeshProUGUI playerCoinText;
+    [SerializeField] private Image playerAvatarImage;
+    [SerializeField] private Button closeProfileButton;
 
-    void Start()
+    [Header("Player Data")]
+    private PlayerData playerData; // ScriptableObject or data source for player info
+
+    private void OnEnable()
     {
+        playerData = DataManager.Instance.PlayerData;
+        UpdateProfileUI();
+        closeProfileButton.onClick.AddListener(OnClickClose);
         
+        Time.timeScale = 0f;
     }
 
-    void Update()
+    private void OnClickClose()
     {
-        
+        Hide();
     }
 
-    #endregion
+    private void OnDisable()
+    {
+        closeProfileButton.onClick.RemoveAllListeners();
+        Time.timeScale = 1f;
+    }
 
-    #region Public Methods
-    #endregion
-
-    #region Private Methods
-    #endregion
+    public void UpdateProfileUI()
+    {
+        if (playerData != null)
+        {
+            playerNameText.text = playerData.PlayerName;
+            playerCoinText.text = $"Coins: {DataManager.Instance.CurrentCoin}";
+            playerAvatarImage.sprite = playerData.Avatar;
+        }
+    }
 }

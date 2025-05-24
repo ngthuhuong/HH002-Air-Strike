@@ -11,11 +11,13 @@ public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MME
     [SerializeField] private GUIHUD guiHUD;
     [SerializeField] private GUIShop guiShop;
     [SerializeField] private GUISettings guiSettings;
+    [SerializeField] private GUIProfile guiProfile;
     
     public GUIGameOver GUIGameOver => guiGameOver;
     public GUIHUD GUIHUD => guiHUD;
     public GUIShop GUIShop => guiShop;
     public GUISettings GUISettings => guiSettings;
+    public GUIProfile GUIProfile => guiProfile;
 
     #region MonoBehaviour
 

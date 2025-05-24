@@ -18,6 +18,7 @@ public class GUIHUD : GUIBase
     [Header("Buttons")] 
     [SerializeField] private Button shopButton;
     [SerializeField] private Button settingsButton;
+    [SerializeField] private Button profileButton;
     
     
     #region MonoBehaviour
@@ -26,15 +27,20 @@ public class GUIHUD : GUIBase
     {
         shopButton.onClick.AddListener(OnClickShop);
         settingsButton.onClick.AddListener(OnClickSettings);
+        profileButton.onClick.AddListener(OnClickProfile);
     }
 
-    
+    private void OnClickProfile()
+    {
+        GUIManager.Instance.GUIProfile.Show();
+    }
 
 
     private void OnDisable()
     {
         shopButton.onClick.RemoveAllListeners();
         settingsButton.onClick.RemoveAllListeners();
+        profileButton.onClick.RemoveAllListeners();
     }
 
     #endregion

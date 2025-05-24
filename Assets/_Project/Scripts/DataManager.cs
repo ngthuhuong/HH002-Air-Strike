@@ -64,6 +64,10 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
         }
     }
     
+    [SerializeField] private PlayerData playerData;
+    public PlayerData PlayerData => playerData;
+    
+    
     #region MonoBehaviour
 
     private void OnEnable()
