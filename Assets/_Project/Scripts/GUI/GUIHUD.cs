@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Tools;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GUIHUD : GUIBase
 {
@@ -13,20 +14,44 @@ public class GUIHUD : GUIBase
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI shieldCoolingText;
     [SerializeField] private TextMeshProUGUI speedCoolingText;
+
+    [Header("Buttons")] 
+    [SerializeField] private Button shopButton;
+    [SerializeField] private Button settingsButton;
+    
     
     #region MonoBehaviour
 
     private void OnEnable()
     {
+        shopButton.onClick.AddListener(OnClickShop);
+        settingsButton.onClick.AddListener(OnClickSettings);
     }
+
+    
+
 
     private void OnDisable()
     {
+        shopButton.onClick.RemoveAllListeners();
+        settingsButton.onClick.RemoveAllListeners();
     }
 
     #endregion
-    
 
+    #region Button Events
+
+    private void OnClickShop()
+    {
+        GUIManager.Instance.GUIShop.Show();
+    }
+    
+    private void OnClickSettings()
+    {
+        GUIManager.Instance.GUISettings.Show();
+    }
+
+    #endregion
     #region Public Methods
 
     public void UpdateUI()

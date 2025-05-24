@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-7189957757262920510
+--- !u!21 &-258192312484306496
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2962310935013152559}
+        m_Texture: {fileID: 7974438026640982144}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: Pixellari SDF
   m_EditorClassIdentifier: 
   hashCode: 514899119
-  material: {fileID: -7189957757262920510}
+  material: {fileID: -258192312484306496}
   materialHashCode: 1380875311
   m_Version: 1.1.0
   m_SourceFontFileGUID: f4a57e3176f4a79448c6fbfb23ae8ba9
@@ -1977,7 +1977,7 @@ MonoBehaviour:
     m_GlyphIndex: 98
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 2962310935013152559}
+  - {fileID: 7974438026640982144}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 0
@@ -2662,7 +2662,7 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!28 &2962310935013152559
+--- !u!28 &7974438026640982144
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
