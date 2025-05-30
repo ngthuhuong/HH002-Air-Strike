@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log(other.name);
             MMEventManager.TriggerEvent(new EEarnResource(ResourceType.Coin, 1));
+            MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.SFX_Collect_Coin));
         }
     }
 
@@ -152,6 +153,8 @@ public class PlayerController : MonoBehaviour
                 
                 projectileController.attackController.AttackDamage = attackController.AttackDamage; 
                 projectileController.moveController.Direction = Vector2.up;
+                
+                MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.SFX_Shoot));
                 
                 currentTimer = timeInterval; // Reset the timer
             }

@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using MoreMountains.Tools;
 
-public class AudioManager : Singleton<AudioManager>
+public class AudioManager : Singleton<AudioManager>, MMEventListener<EStopSound>, MMEventListener<EPlaySound>
 {
     public enum SoundName
     {
@@ -11,14 +13,24 @@ public class AudioManager : Singleton<AudioManager>
         SFX_Victory = 3,
        
         SFX_Button_Click = 5,
-        SFX_Lose = 6
+        SFX_Lose = 6,
+        SFX_Shoot = 7,
+        SFX_Explosion_Soft = 8,
+        SFX_Heal = 9
         // Add more sound names as needed
+    }
+    
+    public enum AudioType
+    {
+        BGM,
+        SFX
     }
 
     [System.Serializable]
     public class Sound
     {
         public SoundName name;
+        public AudioType type; // BGM or SFX
         public AudioClip clip;
         [Range(0f, 1f)] public float volume = 1f;
         [Range(0.1f, 3f)] public float pitch = 1f;
@@ -27,13 +39,15 @@ public class AudioManager : Singleton<AudioManager>
 
     [Header("Audio Sources")]
     [SerializeField] private AudioSource bgmSource;
-    [SerializeField] private int sfxPoolSize = 5; // Number of SFX AudioSources
+    [SerializeField] private int sfxPoolSize = 7; // Number of SFX AudioSources
     [SerializeField] private List<AudioSource> sfxSources;
 
     [Header("Sounds")]
     [SerializeField] private List<Sound> sounds;
 
     private Dictionary<SoundName, Sound> soundDictionary;
+
+    #region MonoBehaviour
 
     private void Awake()
     {
@@ -42,6 +56,8 @@ public class AudioManager : Singleton<AudioManager>
         {
             soundDictionary[sound.name] = sound;
         }
+        
+        bgmSource = gameObject.AddComponent<AudioSource>();
 
         // Initialize SFX AudioSource pool
         sfxSources = new List<AudioSource>();
@@ -51,6 +67,20 @@ public class AudioManager : Singleton<AudioManager>
             sfxSources.Add(sfxSource);
         }
     }
+
+    private void OnEnable()
+    {
+        this.MMEventStartListening<EStopSound>();
+        this.MMEventStartListening<EPlaySound>();
+    }
+
+    private void OnDisable()
+    {
+        this.MMEventStopListening<EStopSound>();
+        this.MMEventStopListening<EPlaySound>();
+    }
+
+    #endregion
 
     public void PlayBGM(SoundName name)
     {
@@ -92,6 +122,18 @@ public class AudioManager : Singleton<AudioManager>
             availableSource.Play();
         }
     }
+    
+    private void StopSFX(AudioManager.SoundName name)
+    {
+        foreach (var source in sfxSources)
+        {
+            if (source.clip != null && source.clip.name == name.ToString())
+            {
+                source.Stop();
+                break;
+            }
+        }
+    }
 
     private AudioSource GetAvailableSFXSource()
     {
@@ -119,4 +161,40 @@ public class AudioManager : Singleton<AudioManager>
             source.volume = Mathf.Clamp01(volume);
         }
     }
+
+    #region Events Listen
+
+    public void OnMMEvent(EStopSound eventType)
+    {
+        if (soundDictionary.ContainsKey(eventType.SoundName))
+        {
+            Sound sound = soundDictionary[eventType.SoundName];
+            if (sound.type == AudioType.BGM)
+            {
+                StopBGM();
+            }
+            else if (sound.type == AudioType.SFX)
+            {
+                StopSFX(eventType.SoundName);
+            }
+        }
+    }
+
+    public void OnMMEvent(EPlaySound eventType)
+    {
+        if (soundDictionary.ContainsKey(eventType.SoundName))
+        {
+            Sound sound = soundDictionary[eventType.SoundName];
+            if (sound.type == AudioType.BGM)
+            {
+                PlayBGM(eventType.SoundName);
+            }
+            else if (sound.type == AudioType.SFX)
+            {
+                PlaySFX(eventType.SoundName);
+            }
+        }
+    }
+
+    #endregion
 }

@@ -44,6 +44,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
     {
         StartCoroutine(SpawnAllLevels());
         MMEventManager.TriggerEvent(new EGameStart());
+        MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.BGM_MainTheme));
     }
 
     private void OnEnable()

@@ -50,6 +50,7 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator IDie()
     {
+        MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.SFX_Explosion_Soft));
         // tắt hình ảnh, collider,
         spriteRenderer.enabled = false;
         collider2D.enabled = false;

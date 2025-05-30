@@ -59,6 +59,7 @@ public class HealthController : MonoBehaviour
     // Method to heal
     public void Heal(int amount)
     {
+        MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.SFX_Heal));
         CurrentHealth += amount;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, maxHealth);
     }
@@ -109,7 +110,11 @@ public class HealthController : MonoBehaviour
         MMEventManager.TriggerEvent(new EActiveBooster(BoosterType.Shield, duration));
         isInvincible = true;
         if (shieldVFX != null)
+        {
             shieldVFX.SetActive(true);
+            MMEventManager.TriggerEvent(new EPlaySound(AudioManager.SoundName.SFX_Active_Shield));
+        }
+        
         yield return new WaitForSeconds(duration);
         isInvincible = false;
         if (shieldVFX != null)

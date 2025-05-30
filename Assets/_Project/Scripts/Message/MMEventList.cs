@@ -68,6 +68,26 @@ public struct EAchievementUnlocked
     }
 }
 
+public struct EPlaySound
+{
+    public AudioManager.SoundName SoundName;
+
+    public EPlaySound(AudioManager.SoundName soundName)
+    {
+        this.SoundName = soundName;
+    }
+}
+
+public struct EStopSound
+{
+    public AudioManager.SoundName SoundName;
+
+    public EStopSound(AudioManager.SoundName soundName)
+    {
+        this.SoundName = soundName;
+    }
+}
+
 public enum ResourceType
 {
     Coin,
