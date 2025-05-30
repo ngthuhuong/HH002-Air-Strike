@@ -2212,6 +2212,90 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706263674}
   m_CullTransparentMesh: 1
+--- !u!1 &1728330169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1728330171}
+  - component: {fileID: 1728330170}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1728330170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728330169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb34cecf9dc91f4da92bf48322540f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontDestroyOnLoad: 1
+  bgmSource: {fileID: 0}
+  sfxPoolSize: 5
+  sfxSources: []
+  sounds:
+  - name: 0
+    clip: {fileID: 8300000, guid: 4df3e4b165e824a4e9aaa4c4fa96c532, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+  - name: 1
+    clip: {fileID: 8300000, guid: 1c2a63a3bf5d95942987bed6e4ba1abf, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: 2
+    clip: {fileID: 8300000, guid: 7ea42b4ee56a5e24492d846d377fd712, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: 3
+    clip: {fileID: 8300000, guid: 8b56a4fa3f5caf64780474aaaf7dab06, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: 4
+    clip: {fileID: 8300000, guid: 78c3910597c34714ab4a4b2768af13eb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: 5
+    clip: {fileID: 8300000, guid: 3b495a4bcfea4064c8e254069d8a43b9, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - name: 6
+    clip: {fileID: 8300000, guid: 78c3910597c34714ab4a4b2768af13eb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+--- !u!4 &1728330171
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1728330169}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 110.03705, y: 1955.3076, z: -1.2907242}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1846965578
 GameObject:
   m_ObjectHideFlags: 0
@@ -2908,6 +2992,7 @@ SceneRoots:
   - {fileID: 7659961201641587832}
   - {fileID: 4807352864866849679}
   - {fileID: 6205200024692145602}
+  - {fileID: 1728330171}
   - {fileID: 1157107445}
   - {fileID: 781179200}
   - {fileID: 3442331025192859511}
