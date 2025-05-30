@@ -1,31 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GUISettings : GUIBase
 {
-    [Header("Buttons")] 
+    [Header("Buttons")]
     [SerializeField] private Button closeButton;
     [SerializeField] private Button backToHomeButton;
-    
+
     [Header("Sliders")]
-    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+
+    private AudioMixer audioMixer;
+    private const string MusicVolumeParam = "Music";
+    private const string SFXVolumeParam = "SFX";
 
     #region MonoBehaviour
 
     private void Start()
     {
-        // Initialize the slider value with the current audio volume
-        volumeSlider.value = AudioListener.volume;
+        // Initialize sliders with current mixer values
+        float musicVolume, sfxVolume;
+        audioMixer = AudioManager.Instance.audioMixer;
+        audioMixer.GetFloat(MusicVolumeParam, out musicVolume);
+        audioMixer.GetFloat(SFXVolumeParam, out sfxVolume);
 
-        // Add a listener to handle volume changes
-        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        musicSlider.value = Mathf.Pow(10, musicVolume / 20); // Convert dB to linear
+        sfxSlider.value = Mathf.Pow(10, sfxVolume / 20);
+
+        // Add listeners for slider changes
+        musicSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+        sfxSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
     }
-
-    
 
     private void OnEnable()
     {
@@ -34,13 +42,10 @@ public class GUISettings : GUIBase
         Time.timeScale = 0f;
     }
 
-    
-
     private void OnDisable()
     {
         closeButton.onClick.RemoveAllListeners();
         backToHomeButton.onClick.RemoveAllListeners();
-        
         Time.timeScale = 1f;
     }
 
@@ -58,10 +63,17 @@ public class GUISettings : GUIBase
     {
         Hide();
     }
-    
-    private void OnVolumeChanged(float arg0)
+
+    private void OnMusicVolumeChanged(float value)
     {
-        throw new NotImplementedException();
+        float volume = Mathf.Log10(value) * 20; // Convert linear to dB
+        audioMixer.SetFloat(MusicVolumeParam, volume);
+    }
+
+    private void OnSFXVolumeChanged(float value)
+    {
+        float volume = Mathf.Log10(value) * 20; // Convert linear to dB
+        audioMixer.SetFloat(SFXVolumeParam, volume);
     }
 
     #endregion

@@ -2,9 +2,15 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using MoreMountains.Tools;
+using UnityEngine.Audio;
 
 public class AudioManager : Singleton<AudioManager>, MMEventListener<EStopSound>, MMEventListener<EPlaySound>
 {
+    [Header("Audio Mixers")]
+    public AudioMixer audioMixer;
+    [SerializeField] private AudioMixerGroup musicMixer;
+    [SerializeField] private AudioMixerGroup sfxMixer;
+    
     public enum SoundName
     {
         BGM_MainTheme = 0,
@@ -58,12 +64,14 @@ public class AudioManager : Singleton<AudioManager>, MMEventListener<EStopSound>
         }
         
         bgmSource = gameObject.AddComponent<AudioSource>();
+        bgmSource.outputAudioMixerGroup = musicMixer;
 
         // Initialize SFX AudioSource pool
         sfxSources = new List<AudioSource>();
         for (int i = 0; i < sfxPoolSize; i++)
         {
             AudioSource sfxSource = gameObject.AddComponent<AudioSource>();
+            sfxSource.outputAudioMixerGroup = sfxMixer;
             sfxSources.Add(sfxSource);
         }
     }
