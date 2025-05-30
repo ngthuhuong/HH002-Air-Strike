@@ -56,6 +56,9 @@ MonoBehaviour:
   coinText: {fileID: 3537510871601853796}
   shieldCoolingText: {fileID: 6854548507384188928}
   speedCoolingText: {fileID: 1480525253529694204}
+  shopButton: {fileID: 0}
+  settingsButton: {fileID: 0}
+  profileButton: {fileID: 0}
 --- !u!1 &206233493506606664
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -249,7 +252,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -509,7 +512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -646,7 +649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -723,7 +726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1509,6 +1512,7 @@ MonoBehaviour:
   shopData: {fileID: 11400000, guid: 41c28df3db5a15d44bc06615c426abe2, type: 2}
   scrollViewContent: {fileID: 4692208226285050722}
   shopItemPrefab: {fileID: 9142391316786212987, guid: 5f008dd00a0036c44880f441807a9a5f, type: 3}
+  closeButton: {fileID: 0}
 --- !u!1 &4026772012155106962
 GameObject:
   m_ObjectHideFlags: 0
@@ -1828,6 +1832,9 @@ MonoBehaviour:
   dontDestroyOnLoad: 1
   guiGameOver: {fileID: 683163298532185101}
   guiHUD: {fileID: 5621637128358129164}
+  guiShop: {fileID: 0}
+  guiSettings: {fileID: 0}
+  guiProfile: {fileID: 0}
 --- !u!1 &5617697398080508905
 GameObject:
   m_ObjectHideFlags: 0
@@ -2049,7 +2056,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2451,7 +2458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

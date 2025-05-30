@@ -40,7 +40,7 @@ public class GUIShop : GUIBase
     private void OnDisable()
     {
         closeButton.onClick.RemoveAllListeners();
-        Time.timeScale = 1f;
+        
     }
 
     #endregion
@@ -49,6 +49,7 @@ public class GUIShop : GUIBase
 
     private void OnClickClose()
     {
+        Time.timeScale = 1f;
         Hide();
     }
 
