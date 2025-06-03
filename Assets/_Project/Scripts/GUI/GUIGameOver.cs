@@ -54,7 +54,7 @@ public class GUIGameOver : GUIBase
         Hide();
         Debug.Log($"Click restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        // MMEventManager.TriggerEvent(new EGameStart());
+        MMEventManager.TriggerEvent(new EGameRestart());
     }
 
     

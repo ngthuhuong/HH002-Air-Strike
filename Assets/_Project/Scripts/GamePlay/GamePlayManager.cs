@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnemyDie>
+public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnemyDie>, MMEventListener<EGameRestart>, IResetable
 {
     [Header("Game Components")]
     [SerializeField] private PlayerController player; // Reference to the player
@@ -18,14 +18,11 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         set => player = value;
     }
 
-    [SerializeField] private EnemySpawner enemySpawner; // Reference to the enemy spawner
-    public EnemySpawner EnemySpawner
-    {
-        get => enemySpawner;
-        set => enemySpawner = value;
-    }
+    [SerializeField] private EnemySpawner enemySpawner;
+
+    [SerializeField] private Transform enemyContainer; 
     
-    public GameObject enemyProjectileContainer;
+    public Transform enemyProjectileContainer;
 
     public Transform centerPoint;
 
@@ -54,7 +51,6 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
     private void OnEnable()
     {
         MMEventManager.RegisterAllCurrentEvents(this);
-        
     }
 
     private void OnDisable()
@@ -80,7 +76,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         foreach (var spawnData in currentLevelData.enemySpawns)
         {
             yield return new WaitForSeconds(spawnData.spawnTime);
-            Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity).GetComponent<EnemyController>();
+            Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity, enemyContainer).GetComponent<EnemyController>();
         }
     }
 
@@ -118,14 +114,54 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
 
         Debug.Log("All levels completed!");
     }
-
-    #endregion
-
+    
     public void OnMMEvent(EEnemyDie eventType)
     {
         Debug.Log($"GamePlayManager received EEnemyDie event");
         OnEnemyDefeated();
     }
+
+    public void OnMMEvent(EGameRestart eventType)
+    {
+        ResetState();
+    }
+
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+       Player.ResetState();
+       
+       // Destroy all enemies
+       foreach (Transform child in enemyContainer.transform)
+       {
+           Destroy(child.gameObject);
+       }
+       
+       //Destroy all enemy projectiles
+         foreach (Transform child in enemyProjectileContainer.transform)
+         {
+              Destroy(child.gameObject);
+         }
+       
+       remainingEnemies = 0;
+       isLevelComplete = false;
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
+    }
+    
+    #endregion
 }
 
 #if UNITY_EDITOR

@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using MoreMountains.Tools;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class RewardPoolCoin : Singleton<RewardPoolCoin>
+public class RewardPoolCoin : Singleton<RewardPoolCoin>, IResetable, MMEventListener<EGameRestart>
 {
     [System.Serializable]
     public class Reward
@@ -27,6 +30,16 @@ public class RewardPoolCoin : Singleton<RewardPoolCoin>
     private Dictionary<RewardType, List<GameObject>> rewardPools = new Dictionary<RewardType, List<GameObject>>();
 
     #region MonoBehaviour
+
+    private void OnEnable()
+    {
+        MMEventManager.RegisterAllCurrentEvents(this);
+    }
+
+    private void OnDisable()
+    {
+        MMEventManager.UnregisterAllCurrentEvents(this);
+    }
 
     private void Start()
     {
@@ -123,7 +136,58 @@ public class RewardPoolCoin : Singleton<RewardPoolCoin>
             return;
         }
 
-        obj.SetActive(false);
-        rewardPools[rewardType].Add(obj);
+        if (rewardPools[rewardType].Contains(obj))
+        {
+            obj.SetActive(false);
+            rewardPools[rewardType].Add(obj);
+        }
+        else
+        {
+            Debug.LogWarning($"Object is already in the pool for reward type {rewardType}.");
+        }
     }
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        Debug.Log($"Reset State of RewardPoolCoin");
+        // Iterate through each reward type in the pool
+        foreach (var rewardType in rewardPools.Keys.ToList())
+        {
+            // Get the list of objects for the current reward type
+            var pool = rewardPools[rewardType];
+
+            // Find all active objects in the pool
+            var activeObjects = pool.Where(obj => obj.activeSelf).ToList();
+
+            // Deactivate and return each active object to the pool
+            foreach (var obj in activeObjects)
+            {
+                ReturnObject(rewardType, obj);
+            }
+        }
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
+
+    #region Events Listen
+
+    public void OnMMEvent(EGameRestart eventType)
+    {
+        ResetState();
+    }
+
+    #endregion
 }

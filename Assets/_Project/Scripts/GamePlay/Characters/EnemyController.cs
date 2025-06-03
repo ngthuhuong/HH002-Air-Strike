@@ -59,9 +59,6 @@ public class EnemyController : MonoBehaviour
         // bật hiệu ứng chết
         
         dieVFX.SetActive(true);
-        //Instantiate(coinController, transform.position, Quaternion.identity);
-        // CoinPoolObject.Instance.GetObject(transform.position, Quaternion.identity);
-        // PoolingManager.Instance.ReturnObject(PoolingManager.PoolTag.Coin, gameObject);
         RewardPoolCoin.Instance.GetRandomReward(transform.position, Quaternion.identity);
         
         yield return new WaitForSeconds(1f);
@@ -73,7 +70,10 @@ public class EnemyController : MonoBehaviour
     {
         // Check if the projectile is outside the screen
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(transform.position);
-        if (viewportPosition.y < ConstValue.ViewportMinY)
+        if (viewportPosition.y < ConstValue.ViewportMinY
+            || viewportPosition.x > ConstValue.ViewportMaxX * 8
+            || viewportPosition.x < ConstValue.ViewportMinX * 8
+            || viewportPosition.y > ConstValue.ViewportMaxY * 20)
         {
             // ProjectilePoolObject.Instance.ReturnObject(gameObject);
             // PoolingManager.Instance.ReturnObject(poolTag, gameObject);

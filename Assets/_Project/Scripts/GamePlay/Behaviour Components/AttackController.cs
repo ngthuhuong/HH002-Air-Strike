@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class AttackController : MonoBehaviour
+public class AttackController : MonoBehaviour, IResetable
 {
     [Header("Attack Stats")]
     [SerializeField] private int attackDamage = 10; 
@@ -64,6 +64,26 @@ public class AttackController : MonoBehaviour
         {
             Debug.Log("Attack is on cooldown.");
         }*/
+    }
+
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

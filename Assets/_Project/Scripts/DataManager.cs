@@ -5,7 +5,7 @@ using MoreMountains.Tools;
 using UnityEngine;
 
 
-public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>, MMEventListener<EEarnResource>, MMEventListener<EAchievementUnlocked>, MMEventListener<EGameStart>
+public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, MMEventListener<EGameOver>,MMEventListener<EEnemyDie>, MMEventListener<EEarnResource>, MMEventListener<EAchievementUnlocked>, MMEventListener<EGameStart>, MMEventListener<EGameRestart>, IResetable
 {
     [SerializeField] private int highScore;
     
@@ -144,6 +144,31 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
     public void OnMMEvent(EGameStart eventType)
     {
         GamesPlayed += 1;
+    }
+
+    public void OnMMEvent(EGameRestart eventType)
+    {
+        ResetState();
+    }
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        CurrentScore = 0;
+        CurrentLevelId = 0;
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

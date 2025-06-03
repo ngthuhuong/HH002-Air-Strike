@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEngine;
 
-public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MMEventListener<EDataChanged>,MMEventListener<EActiveBooster>
+public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MMEventListener<EDataChanged>,MMEventListener<EActiveBooster>, MMEventListener<EGameRestart>, IResetable
 {
     [Header("GUIs")] 
     [SerializeField] private GUIGameOver guiGameOver;
@@ -38,6 +38,8 @@ public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MME
 
     #endregion
 
+    #region Events Listen
+
     public void OnMMEvent(EGameOver eventType)
     {
         //Hiện GUIGameOver
@@ -54,4 +56,31 @@ public class GUIManager : Singleton<GUIManager>, MMEventListener<EGameOver>, MME
     {
         guiHUD.AppyBoosterCooldown(eventType.BoosterType, eventType.Duration);
     }
+
+    public void OnMMEvent(EGameRestart eventType)
+    {
+        ResetState();
+    }
+
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
+    }
+
+    #endregion
 }

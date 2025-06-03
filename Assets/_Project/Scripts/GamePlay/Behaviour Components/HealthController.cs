@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using MoreMountains.Tools;
 
-public class HealthController : MonoBehaviour
+public class HealthController : MonoBehaviour, IResetable
 {
     [Header("Stats")]
     [SerializeField] private float maxHealth = 100;
@@ -30,7 +31,7 @@ public class HealthController : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
+        ResetState();
     }
 
     #endregion
@@ -119,6 +120,26 @@ public class HealthController : MonoBehaviour
         isInvincible = false;
         if (shieldVFX != null)
             shieldVFX.SetActive(false);
+    }
+
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        CurrentHealth = maxHealth;
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

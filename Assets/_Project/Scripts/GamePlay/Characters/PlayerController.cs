@@ -5,7 +5,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IResetable
 {
     [Header("Components")]
     [SerializeField] private AttackController attackController;
@@ -214,6 +214,32 @@ public class PlayerController : MonoBehaviour
         this.speedMultiplier = speedMultiplier;
         yield return new WaitForSeconds(duration);
         this.speedMultiplier = 1f;
+    }
+
+    #endregion
+
+    #region IResetable
+
+    public bool isActivated { get; set; }
+    public void ResetState()
+    {
+        Debug.Log($"PlayerController.ResetState() - {gameObject.name}");
+        collider2D.enabled = true;
+        spriteRenderer.enabled = true;
+        isMovable = true;
+        
+        healthController.ResetState();
+        attackController.ResetState();
+    }
+
+    public void StartState()
+    {
+        throw new NotImplementedException();
+    }
+
+    public void EndState()
+    {
+        throw new NotImplementedException();
     }
 
     #endregion

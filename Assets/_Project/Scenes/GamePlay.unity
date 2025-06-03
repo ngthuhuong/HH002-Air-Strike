@@ -4622,10 +4622,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GamePlay
       objectReference: {fileID: 0}
-    - target: {fileID: 4298125544125029012, guid: d6a70a3ece626164084d0b0dc197a47e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8530132298435455057, guid: d6a70a3ece626164084d0b0dc197a47e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.47184557
@@ -4667,7 +4663,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8036099321166980732, guid: d6a70a3ece626164084d0b0dc197a47e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d6a70a3ece626164084d0b0dc197a47e, type: 3}

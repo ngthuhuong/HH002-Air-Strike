@@ -4,6 +4,14 @@ public struct EGameOver
 }
 
 /// <summary>
+///  When game is restarted
+/// </summary>
+public struct EGameRestart
+{
+    
+}
+
+/// <summary>
 /// When player earn score
 /// </summary>
 public struct EEarnScore
