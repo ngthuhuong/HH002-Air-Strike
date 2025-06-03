@@ -92,7 +92,7 @@ public class HealthController : MonoBehaviour
     private void Die()
     {
         onDead?.Invoke();
-        Debug.Log($"{gameObject.name} has died.");
+        // Debug.Log($"{gameObject.name} has died.");
         //Destroy(gameObject);
     }
 

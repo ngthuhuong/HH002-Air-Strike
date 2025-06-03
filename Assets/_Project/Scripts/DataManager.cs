@@ -72,22 +72,26 @@ public class DataManager : Singleton<DataManager>, MMEventListener<EEarnScore>, 
 
     private void OnEnable()
     {
-        this.MMEventStartListening<EEarnScore>();
+        /*this.MMEventStartListening<EEarnScore>();
         this.MMEventStartListening<EGameOver>();
         this.MMEventStartListening<EEnemyDie>();
         this.MMEventStartListening<EEarnResource>();
         this.MMEventStartListening<EAchievementUnlocked>();
-        this.MMEventStartListening<EGameStart>();
+        this.MMEventStartListening<EGameStart>();*/
+        
+        MMEventManager.RegisterAllCurrentEvents(this);
     }
 
     private void OnDisable()
     {
-        this.MMEventStopListening<EEarnScore>();
+        /*this.MMEventStopListening<EEarnScore>();
         this.MMEventStopListening<EGameOver>();
         this.MMEventStopListening<EEnemyDie>();
         this.MMEventStopListening<EEarnResource>();
         this.MMEventStopListening<EAchievementUnlocked>();
-        this.MMEventStopListening<EGameStart>();
+        this.MMEventStopListening<EGameStart>();*/
+        
+        MMEventManager.UnregisterAllCurrentEvents(this);
     }
 
     #endregion

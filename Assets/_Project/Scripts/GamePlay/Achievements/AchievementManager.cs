@@ -11,21 +11,24 @@ public class AchievementManager : Singleton<AchievementManager>, MMEventListener
 
     private void OnEnable()
     {
-        this.MMEventStartListening<EEnemyDie>();
-        this.MMEventStartListening<EGameStart>();
+        /*this.MMEventStartListening<EEnemyDie>();
+        this.MMEventStartListening<EGameStart>();*/
+        MMEventManager.RegisterAllCurrentEvents(this);
     }
 
     private void OnDisable()
     {
-        this.MMEventStopListening<EEnemyDie>();
-        this.MMEventStopListening<EGameStart>();
+        /*this.MMEventStopListening<EEnemyDie>();
+        this.MMEventStopListening<EGameStart>();*/
+        
+        MMEventManager.UnregisterAllCurrentEvents(this);
     }
 
     #endregion
     
     public void IncrementAchievementProgress(AchievementType type, int incrementValue)
     {
-        Debug.Log($"AchievementManager: type {type} increment value {incrementValue}");
+        // Debug.Log($"AchievementManager: type {type} increment value {incrementValue}");
         foreach (var achievement in achievements)
         {
             if (achievement.type == type)
@@ -49,7 +52,7 @@ public class AchievementManager : Singleton<AchievementManager>, MMEventListener
 
     private void UnlockAchievement(Achievement achievement)
     {
-        Debug.Log($"AchievementManager: unlocked achievement {achievement.name}");
+        // Debug.Log($"AchievementManager: unlocked achievement {achievement.name}");
         if (PlayerPrefs.GetInt(achievement.name + "_Unlocked", 0) == 1)
             return; // Already unlocked
 

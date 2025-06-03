@@ -32,8 +32,7 @@ namespace MoreMountains.Tools
 
     /// <summary>
     /// This class handles event management, and can be used to broadcast events throughout the game, to tell one class (or many) that something's happened.
-    /// Events are structs, you can define any kind of events you want. This manager comes with MMGameEvents, which are 
-    /// basically just made of a string, but you can work with more complex ones if you want.
+    /// Events are structs, you can define any kind of events you want. This manager comes with MMGameEvents, which are basically just made of a string, but you can work with more complex ones if you want.
     /// 
     /// To trigger a new event, from anywhere, do YOUR_EVENT.Trigger(YOUR_PARAMETERS)
     /// So MMGameEvent.Trigger("Save"); for example will trigger a Save MMGameEvent
@@ -189,6 +188,57 @@ namespace MoreMountains.Tools
 
             return exists;
         }
+        
+        public static void RegisterAllCurrentEvents(UnityEngine.Object currentObj)
+        {
+            var interfaces = currentObj.GetType().GetInterfaces();
+            foreach (var iface in interfaces)
+            {
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(MMEventListener<>))
+                {
+                    var eventType = iface.GetGenericArguments()[0];
+                    var method = typeof(EventRegister).GetMethod(nameof(EventRegister.MMEventStartListening))
+                        .MakeGenericMethod(eventType);
+                    method.Invoke(currentObj, new object[] { currentObj });
+                }
+            }
+        }
+
+        public static void UnregisterAllCurrentEvents(UnityEngine.Object currentObj)
+        {
+            var interfaces = currentObj.GetType().GetInterfaces();
+            foreach (var iface in interfaces)
+            {
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(MMEventListener<>))
+                {
+                    var eventType = iface.GetGenericArguments()[0];
+                    var method = typeof(EventRegister).GetMethod(nameof(EventRegister.MMEventStopListening))
+                        .MakeGenericMethod(eventType);
+                    method.Invoke(currentObj, new object[] { currentObj });
+                }
+            }
+        }
+
+        public static List<string> GetCurrentEvents(UnityEngine.Object currentObj)
+        {
+            List<string> eventNames = new List<string>();
+            var interfaces = currentObj.GetType().GetInterfaces();
+            foreach (var iface in interfaces)
+            {
+                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(MMEventListener<>))
+                {
+                    /*var eventType = iface.GetGenericArguments()[0];
+                    var method = typeof(EventRegister).GetMethod(nameof(EventRegister.MMEventStopListening))
+                        .MakeGenericMethod(eventType);
+                    method.Invoke(currentObj, new object[] { currentObj });*/
+                    
+                    eventNames.Add(iface.ToString());
+                }
+            }
+            return eventNames;
+        }
+        
+
     }
 
     /// <summary>

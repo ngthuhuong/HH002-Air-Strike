@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using MoreMountains.Tools;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnemyDie>
 {
     [Header("Game Components")]
@@ -36,7 +40,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         set => isLevelComplete = value;
     }
 
-    private int remainingEnemies; // Track the number of enemies in the current level
+    [SerializeField] private int remainingEnemies; // Track the number of enemies in the current level
 
     #region MonoBehaviour
 
@@ -49,28 +53,35 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
 
     private void OnEnable()
     {
-        this.MMEventStartListening<EEnemyDie>();
+        MMEventManager.RegisterAllCurrentEvents(this);
+        
     }
 
     private void OnDisable()
     {
-        this.MMEventStopListening<EEnemyDie>();
+        MMEventManager.UnregisterAllCurrentEvents(this);
     }
 
     #endregion
 
     #region Public Methods
 
-    public void SpawnCurrentLevel()
+    public IEnumerator SpawnCurrentLevel()
     {
         if (DataManager.Instance.CurrentLevelId >= allLevels.Count)
         {
             Debug.LogError("Current level ID exceeds the number of available levels.");
-            return;
+            yield return null;
         }
         LevelData currentLevelData = allLevels[DataManager.Instance.CurrentLevelId];
         remainingEnemies = currentLevelData.enemySpawns.Count;
-        StartCoroutine(SpawnEnemies(currentLevelData));
+        
+
+        foreach (var spawnData in currentLevelData.enemySpawns)
+        {
+            yield return new WaitForSeconds(spawnData.spawnTime);
+            Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity).GetComponent<EnemyController>();
+        }
     }
 
     public void OnEnemySpawned()
@@ -97,7 +108,7 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         for (int i = 0; i < allLevels.Count; i++)
         {
             DataManager.Instance.CurrentLevelId = i; // Set the current level ID
-            SpawnCurrentLevel();
+            yield return SpawnCurrentLevel();
 
             // Wait until the current level is complete
             yield return new WaitUntil(() => isLevelComplete);
@@ -108,24 +119,43 @@ public class GamePlayManager : Singleton<GamePlayManager>, MMEventListener<EEnem
         Debug.Log("All levels completed!");
     }
 
-    private IEnumerator SpawnEnemies(LevelData levelData)
-    {
-        remainingEnemies = 0; // Reset enemy count for the new level
-
-        foreach (var spawnData in levelData.enemySpawns)
-        {
-            yield return new WaitForSeconds(spawnData.spawnTime);
-            EnemyController enemy = Instantiate(spawnData.enemyPrefab, spawnData.spawnPosition, Quaternion.identity).GetComponent<EnemyController>();
-            // enemy.centerPoint = centerPoint;
-
-            //OnEnemySpawned(); // Increment enemy count
-        }
-    }
-
     #endregion
 
     public void OnMMEvent(EEnemyDie eventType)
     {
+        Debug.Log($"GamePlayManager received EEnemyDie event");
         OnEnemyDefeated();
     }
 }
+
+#if UNITY_EDITOR
+[CanEditMultipleObjects]
+[CustomEditor(typeof(GamePlayManager))]
+public class GamePlayManagerInspector : Editor
+{
+    private GamePlayManager gamePlayManager;
+    
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        gamePlayManager = (GamePlayManager)target;
+        GUILayout.Space(10);
+        GUILayout.Label("Current Events Listening", EditorStyles.boldLabel);
+
+        List<string> events = MMEventManager.GetCurrentEvents(gamePlayManager);
+        if (events.Count > 0)
+        {
+            foreach (string eventName in events)
+            {
+                GUILayout.Label($"- {eventName.Substring(37)}");
+            }
+        }
+        else
+        {
+            GUILayout.Label("No events currently being listened to.");
+        }
+
+        Repaint(); // Ensure the Inspector updates in real-time
+    }
+}
+#endif

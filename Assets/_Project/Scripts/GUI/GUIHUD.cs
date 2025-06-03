@@ -73,7 +73,6 @@ public class GUIHUD : GUIBase
     {
         if (type == BoosterType.Speed)
         {
-            Debug.Log("Speedddddd");
             StartCoroutine(BoosterCooldownCoroutine(type, duration, speedCoolingText));
         }
         else if (type == BoosterType.Shield)

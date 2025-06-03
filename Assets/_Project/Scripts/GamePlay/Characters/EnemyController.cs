@@ -24,6 +24,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnDestroy()
     {
+        Debug.Log($"EnemyController.OnDestroy() - {gameObject.name}");
         MMEventManager.TriggerEvent(new EEnemyDie());
     }
 
